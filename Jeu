@@ -1,3 +1,51 @@
+import java.util.Scanner;
 public class Jeu{
-
+    
+    public static void main(String [] args){
+        Personnage j1=null;
+        Personnage j2=null;
+        
+        System.out.println(regles());
+        System.out.println();
+        System.out.println(descriptionPersos());
+        System.out.println();
+        
+        j1 = choixPerso(j1);
+        j2 = choixPerso(j2);
+    }
+    
+    public static Personnage choixPerso(Personnage j){
+        Scanner sc = new Scanner(System.in);
+        
+        while(sc.next()!= "oui" && j==null){
+            System.out.println(j + " Entre le numéro du personnage que tu mèneras au combat");
+            
+            int i = sc.nextInt();
+            if(i==1){
+                j = new Personnage(/*insérer le constructeur approprié*/);
+            }else if(i==2){
+                j = new Personnage(/*insérer le constructeur approprié*/);
+            }else if(i==3){
+                j = new Personnage(/*insérer le constructeur approprié*/);
+            }else if(i==42){
+                j = new Personnage(/*insérer le constructeur approprié*/); //ceci est un easter egg
+                System.out.println("bravo tu es cheaté.e");
+            }else{
+                System.out.println("erreur ! entre un numéro valide");
+            }
+            
+            if(j!=null){
+                System.out.println("Tu veux incarner "+j.getNom()+" ? entre oui ou non");
+            }
+        }
+        return j;
+    }
+    
+    public static String regles(){
+        return "les règles seront détaillées ici";
+    }
+    
+    public static String descriptionPersos(){
+        return "ceci sera une description des personnages avec un numéro associé à chacun";
+    }
 }
