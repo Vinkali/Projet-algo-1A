@@ -1,3 +1,15 @@
-Public class Personnage{
-
+public class Personnage{
+    private String nom;
+    private int pV;
+    private int attaque;
+    
+    public Personnage(String nom, int vie, int atk){
+        this.nom = nom;
+        this.pV = vie;
+        this.attaque = atk;
+    }
+    
+    public String getNom(){
+        return this.nom;
+    }
 }
