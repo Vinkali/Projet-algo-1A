@@ -4,7 +4,8 @@
 
 
 /* demander au prof :
- * si il faut écrire la javadoc
+ * si il faut écrire les @see get et set dans la javadoc
+ * si on peut éviter le crash quand l'utilisateur tape autre chose que ce que le scanner cherche (comme une lettre au lieu d'un int)
  */
 
 
@@ -34,40 +35,39 @@ public class Jeu{
         afficheVie(j2);
     }
     
+    /** Cette méthode stocke le texte des règles
+     */
     public static String regles(){
         return "les règles seront détaillées ici";
     }
     
+    /** Cette méthode stocke le texte de description des personnages
+     */
     public static String descriptionPersos(){
         return "ceci sera une description des personnages avec un numéro associé à chacun";
     }
     
+    /** Cette méthode initialise les caractéristique d'un personnage à partir d'une liste de modèles prédéfinis
+     * 
+     * @param j le personnage du joueur, qui n'a pas encore de caractéristiques
+     * @return j le personnage du joueur initialisé d'après un modèle
+     */
     public static Personnage choixPerso(Personnage j){
         Scanner sc = new Scanner(System.in);
         boolean confirmation = false;
         
         while(confirmation == false || j.getNom() == null){
-            System.out.println(j.getJoueur() + ", entre le numéro du personnage que tu mèneras au combat");
+            System.out.println(j.getJoueur()+", entre le numéro du personnage que tu mèneras au combat");
             
             int i = sc.nextInt();
-            if(i==1){
-                j = new Personnage(j.getJoueur(),"random",3,4);
-            /*}else if(i==2){
-                j = new Personnage(/*insérer le constructeur approprié);
-            }else if(i==3){
-                j = new Personnage(/*insérer le constructeur approprié);
-            }else if(i==42){
-                j = new Personnage(/*insérer le constructeur approprié); //ceci est un easter egg
-                System.out.println("bravo tu es cheaté.e");*/
-            }else{
-                System.out.println("erreur ! entre un numéro valide");
-                j = new Personnage(j.getJoueur());
-            }
+            j = new Personnage(j.getJoueur(),i);
             
             if(j.getNom() != null){
                 System.out.println("Tu veux incarner "+j.getNom()+" ? entre 1 si oui et 2 si non");
                 if(sc.nextInt()==1){
                     confirmation=true;
+                }else{
+                    System.out.println("Non ? D'accord");
                 }
             }
         }
@@ -97,6 +97,9 @@ public class Jeu{
         //A remplir
     }
     
+    /** Cette méthode affiche l'état actuel du plateau de jeu
+     * @param p le plateau à afficher
+     */
     public static void affichePlateau(String[][] p){
         for(int i=0; i<p.length; i++){
             for(int j=0; j<p[0].length; j++){
@@ -106,9 +109,12 @@ public class Jeu{
         }
     }
     
+    /** Cette méthode affiche le nombre de points de vie restants d'un personnage
+     * @param p le personnage dont on veut afficher les pV
+     */
     public static void afficheVie(Personnage p){
         System.out.println("PV "+p.getJoueur()+" :");
-        for(int i=0; i<p.getVieRestante(); i++){
+        for(int i=0; i<p.getPV(); i++){
             System.out.print("*");
         }
         System.out.println();
