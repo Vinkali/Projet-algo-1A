@@ -16,6 +16,7 @@ public class Jeu{
         String [][] plateau = creationPlateau();
         placementJoueurAlea(plateau, "J1", "J2"); /Place les joueurs de maniere aléatoire sur le plateau
         
+        affichePlateau(plateau);
     }
     
     public static Personnage choixPerso(Personnage j){
@@ -45,13 +46,7 @@ public class Jeu{
         return j;
     }
     
-    public static String regles(){
-        return "les règles seront détaillées ici";
-    }
     
-    public static String descriptionPersos(){
-        return "ceci sera une description des personnages avec un numéro associé à chacun";
-    }
     
     public static String [][] creationPlateau(){
         String [][] p= new String[12][12];
@@ -72,5 +67,23 @@ public class Jeu{
     
     public static void placementJoueurAleat(String[][] plateau, String J1, String J2){
         /A remplir
+    }
+    
+    public static void affichePlateau(String[][] p){
+        for(int i=0; i<p.length; i++){
+            for(int j=0; j<p[0].length; j++){
+                System.out.print(p[i][j]);
+            }
+            System.out.println();
+        }
+    }
+    
+    
+    public static String regles(){
+        return "les règles seront détaillées ici";
+    }
+    
+    public static String descriptionPersos(){
+        return "ceci sera une description des personnages avec un numéro associé à chacun";
     }
 }
