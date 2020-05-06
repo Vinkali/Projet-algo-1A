@@ -1,10 +1,10 @@
 public class Personnage{
-    private String nom;
+    private String nom; /* Ca serait plus facile de les mettre en public non? */
     private int pV;
-    private Attaque attaque1= new Attaque();
-    private Attaque attaque2= new Attaque();
+    private Attaque attaque1;
+    private Attaque attaque2;
     
-    public Personnage(String nom, int vie, int atk1, int atk2){
+    public Personnage(){
         this.nom = nom;
         this.pV = vie;
         this.attaque1 = atk2;
@@ -12,21 +12,19 @@ public class Personnage{
     }
     
     public Personnage(int i){
-        if(i==1){
-            this.nom = "Hector";
+        if(i==1){ /* Ceci est simplement un exemple, a chaque i on associe un personnage définit*/
+            this.nom = "Hector"; 
             this.pV = 10;
-            this.attaque1 = Attaque("Tir arc", 6, 20);
-            this.attaque2 = Attaque("Coup de poing", 1, 50);
-        }else if(){
-        
-        }
+            this.attaque1 = new Attaque("Tir arc", 6, 20);
+            this.attaque2 = new Attaque("Coup de poing", 1, 50);
+        }/*else if...*/
     }
     
     public String getNom(){
         return this.nom;
     }
     
-    public String getPV(){
+    public int getPV(){
         return this.pV;
     }
     
