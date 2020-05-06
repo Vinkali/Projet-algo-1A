@@ -1,15 +1,27 @@
 public class Personnage{
     private String nom;
     private int pV;
-    private int attaque;
+    private Attaque attaque1= new Attaque();
+    private Attaque attaque2= new Attaque();
     
-    public Personnage(String nom, int vie, int atk){
+    public Personnage(String nom, int vie, int atk1, int atk2){
         this.nom = nom;
         this.pV = vie;
-        this.attaque = atk;
+        this.attaque1 = atk2;
+        this.attaque2 = atk2;
     }
     
     public String getNom(){
         return this.nom;
     }
+    
+    public String getPV(){
+        return this.pV;
+    }
+    
+    public void degat(int degat){
+        this.pV = this.pV - degat;
+    }
+    
 }
+
