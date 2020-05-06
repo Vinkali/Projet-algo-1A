@@ -1,9 +1,21 @@
+
+
+
+
+
+/* demander au prof :
+ * si il faut écrire la javadoc
+ */
+
+
+
+
 import java.util.Scanner;
 public class Jeu{
     
     public static void main(String [] args){
-        Personnage j1=null;
-        Personnage j2=null;
+        Personnage j1=new Personnage("joueur 1");
+        Personnage j2=new Personnage("joueur 2");
         
         System.out.println(regles());
         System.out.println();
@@ -32,28 +44,35 @@ public class Jeu{
     
     public static Personnage choixPerso(Personnage j){
         Scanner sc = new Scanner(System.in);
+        boolean confirmation = false;
         
-        while(sc.next()!= "oui" && j==null){
-            System.out.println(j + " Entre le numéro du personnage que tu mèneras au combat");
+        while(confirmation == false || j.getNom() == null){
+            System.out.println(j.getJoueur() + ", entre le numéro du personnage que tu mèneras au combat");
             
             int i = sc.nextInt();
             if(i==1){
-                j = new Personnage(/*insérer le constructeur approprié*/);
-            }else if(i==2){
-                j = new Personnage(/*insérer le constructeur approprié*/);
+                j = new Personnage(j.getJoueur(),"random",3,4);
+            /*}else if(i==2){
+                j = new Personnage(/*insérer le constructeur approprié);
             }else if(i==3){
-                j = new Personnage(/*insérer le constructeur approprié*/);
+                j = new Personnage(/*insérer le constructeur approprié);
             }else if(i==42){
-                j = new Personnage(/*insérer le constructeur approprié*/); //ceci est un easter egg
-                System.out.println("bravo tu es cheaté.e");
+                j = new Personnage(/*insérer le constructeur approprié); //ceci est un easter egg
+                System.out.println("bravo tu es cheaté.e");*/
             }else{
                 System.out.println("erreur ! entre un numéro valide");
+                j = new Personnage(j.getJoueur());
             }
             
-            if(j!=null){
-                System.out.println("Tu veux incarner "+j.getNom()+" ? entre oui ou non");
+            if(j.getNom() != null){
+                System.out.println("Tu veux incarner "+j.getNom()+" ? entre 1 si oui et 2 si non");
+                if(sc.nextInt()==1){
+                    confirmation=true;
+                }
             }
         }
+        System.out.println("Entre dans l'arène, ô "+j.getNom()+" !");
+        System.out.println();
         return j;
     }
     
@@ -88,8 +107,8 @@ public class Jeu{
     }
     
     public static void afficheVie(Personnage p){
-        System.out.println("PV "+p+" :");
-        for(int i=0; i<p.getVieRestante(); i++){ // On peut mettre directement getPV() non?
+        System.out.println("PV "+p.getJoueur()+" :");
+        for(int i=0; i<p.getVieRestante(); i++){
             System.out.print("*");
         }
         System.out.println();
