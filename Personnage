@@ -1,6 +1,7 @@
 public class Personnage{
     private String joueur;
     private String nom;
+    private boolean joueEnPremier;
     private int pV;
     private Attaque attaque1;
     private Attaque attaque2;
@@ -26,6 +27,9 @@ public class Personnage{
         }/*else if...
         }*/else if(i==42){
             //ceci est un easter egg
+            this.nom = "L'Être Suprême";
+            this.joueEnPremier = true;
+            //stats à ajouter
             System.out.println("bravo tu es cheaté.e");
         }else{
             System.out.println("erreur ! entre un numéro valide");
@@ -42,6 +46,14 @@ public class Personnage{
     
     public String getJoueur(){
         return this.joueur;
+    }
+    
+    public void setJoueEnPremier(boolean b){
+        this.joueEnPremier=b;
+    }
+    
+    public boolean getJoueEnPremier(){
+        return this.joueEnPremier;
     }
     
     public void degat(int degat){
