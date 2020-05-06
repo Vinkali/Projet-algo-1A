@@ -18,12 +18,18 @@ public class Personnage{
     
     public Personnage(String joueur, int i){
         this.joueur = joueur;
-        if(i==1){ /* Ceci est simplement un exemple, a chaque i on associe un personnage définit*/
+        if(i==1){ /* Ceci est simplement un exemple, a chaque i on associe un personnage défini*/
             this.nom = "Hector"; 
             this.pV = 10;
             this.attaque1 = new Attaque("Tir arc", 6, 20);
             this.attaque2 = new Attaque("Coup de poing", 1, 50);
-        }/*else if...*/
+        }/*else if...
+        }*/else if(i==42){
+            //ceci est un easter egg
+            System.out.println("bravo tu es cheaté.e");
+        }else{
+            System.out.println("erreur ! entre un numéro valide");
+        }
     }
     
     public String getNom(){
