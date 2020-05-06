@@ -11,6 +11,17 @@ public class Personnage{
         this.attaque2 = atk2;
     }
     
+    public Personnage(int i){
+        if(i==1){
+            this.nom = "Hector";
+            this.pV = 10;
+            this.attaque1 = Attaque("Tir arc", 6, 20);
+            this.attaque2 = Attaque("Coup de poing", 1, 50);
+        }else if(){
+        
+        }
+    }
+    
     public String getNom(){
         return this.nom;
     }
