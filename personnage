@@ -4,11 +4,11 @@ public class Personnage{
     private Attaque attaque1;
     private Attaque attaque2;
     
-    public Personnage(){
-        this.nom = nom;
-        this.pV = vie;
-        this.attaque1 = atk2;
-        this.attaque2 = atk2;
+    public Personnage(){ //Constructeur par défaut, on pourra le supprimer quand on aura défini les persos
+        this.nom = "personne";
+        this.pV = 1;
+        this.attaque1 = new Attaque("rien", 1, 1);
+        this.attaque2 = new Attaque("rien", 1, 1);
     }
     
     public Personnage(int i){
