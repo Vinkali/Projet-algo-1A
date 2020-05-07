@@ -24,13 +24,17 @@ public class Personnage{
             this.pV = 10;
             this.attaque1 = new Attaque("Tir arc", 6, 20);
             this.attaque2 = new Attaque("Coup de poing", 1, 50);
-        }/*else if...
-        }*/else if(i==42){
+        /*}else if...*/
+        }else if(i==42){
             //ceci est un easter egg
             this.nom = "L'Être Suprême";
             this.joueEnPremier = true;
-            //stats à ajouter
-            System.out.println("bravo tu es cheaté.e");
+            this.pV = 4242;
+            this.attaque1 = new Attaque("Pichenette Divine", 42, 42);
+            this.attaque2 = new Attaque("Kitten-slaughtering Raging Hellfire of Dastardly DOOM", 424242, 42424242);
+            System.out.println();
+            System.out.println("    <(^_^)>   bravo tu es cheaté.e   <(^_^)>");
+            System.out.println();
         }else{
             System.out.println("erreur ! entre un numéro valide");
         }
