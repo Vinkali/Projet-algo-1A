@@ -27,7 +27,7 @@ public class Jeu{
         j2 = choixPerso(j2);
         
         String [][] plateau = creationPlateau();
-        placementJoueurAlea(plateau, "J1", "J2"); //Place les joueurs de maniere aléatoire sur le plateau
+        placementJoueurAlea(plateau, j1, j2); //Place les joueurs de maniere aléatoire sur le plateau
         
         affichePlateau(plateau);
         
@@ -84,15 +84,17 @@ public class Jeu{
     }
     
     public static String [][] creationPlateau(){
-        String [][] p= new String[12][12];
+        String [][] p= new String[17][17];
         for(int i=0; i<p.length; i++){
             for (int j=0; j<p[0].length; j++){
-                if((i==0)||(i==11)){
-                    p[i][j]=" - "; //On délimite le plateau pour qu'il soit bien visible par les joueurs
-                }else if((i==0)||(i==11)){
-                    p[i][j]=" | ";
+                if((i==0)||(i==16)){
+                    p[i][j]="---"; //On délimite le plateau pour qu'il soit bien visible par les joueurs
+                }else if((j==0)){
+                    p[i][j]="|  ";
+                }else if((j==16)){
+                    p[i][j]="  |";
                 }else{
-                    p[i][j]="  "; //L'intérieur du plateau est vide
+                    p[i][j]=" . "; //L'intérieur du plateau est rempli de points pour bien distinguer les différentes positions, et les distances
                 }
             System.out.println();
             }
@@ -100,9 +102,37 @@ public class Jeu{
     return p;
     }
     
-    public static void placementJoueurAlea(String[][] plateau, String J1, String J2){
-        //A remplir
+    /** Cette méthode place les joueurs de manière aléatoire au début du jeu
+     * @param le plateau de jeu "vide", les joueurs J1 et J2  
+     */
+    public static void placementJoueurAlea(String[][] plateau, Personnage j1, Personnage j2){
+        while(distanceSecurite(j1, j2)==false){
+			j1.setX((int)(Math.random()*14+1));
+			j1.setY((int)(Math.random()*14+1));
+			j2.setX((int)(Math.random()*14+1));
+			j2.setY((int)(Math.random()*14+1));
+		}
+		plateau[j1.getX()][j1.getY()] = "J1 ";
+		plateau[j2.getX()][j2.getY()] = "J2 ";
     }
+    
+    /** Cette méthode vérfie si les deux joueurs ne sont pas 
+     * trop proches pour le début de partie 
+     * et renvoie l'info sous forme de booléen
+     * @param les joueurs j1 et j2
+     * @return b le booléen
+     */
+    public static boolean distanceSecurite(Personnage j1, Personnage j2){
+		boolean b = true;
+		for(int i = j1.getX() - 4; i<= j1.getX() + 4; i++){
+			for(int j = j1.getY() - 4; j<= j1.getY() + 4; j++){
+				if((i==j2.getX())&&(j==j2.getY())){
+					b= false;
+				}
+			}
+		}
+		return b;
+	}
     
     /** Cette méthode affiche l'état actuel du plateau de jeu
      * @param p le plateau à afficher
