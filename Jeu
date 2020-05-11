@@ -108,11 +108,11 @@ public class Jeu{
      */
     public static void placementJoueurAlea(String[][] plateau, Personnage j1, Personnage j2){
         while(distanceSecurite(j1, j2)==false){
-			j1.setX((int)(Math.random()*14+1));
-			j1.setY((int)(Math.random()*14+1));
-			j2.setX((int)(Math.random()*14+1));
-			j2.setY((int)(Math.random()*14+1));
-		}
+		j1.setX((int)(Math.random()*14+1));
+		j1.setY((int)(Math.random()*14+1));
+		j2.setX((int)(Math.random()*14+1));
+		j2.setY((int)(Math.random()*14+1));
+	}
 		plateau[j1.getX()][j1.getY()] = "J1 ";
 		plateau[j2.getX()][j2.getY()] = "J2 ";
     }
@@ -124,15 +124,15 @@ public class Jeu{
      * @return b le booléen
      */
     public static boolean distanceSecurite(Personnage j1, Personnage j2){
-		boolean b = true;
-		for(int i = j1.getX() - 4; i<= j1.getX() + 4; i++){
-			for(int j = j1.getY() - 4; j<= j1.getY() + 4; j++){
-				if((i==j2.getX())&&(j==j2.getY())){
-					b= false;
-				}
+	boolean b = true;
+	for(int i = j1.getX() - 4; i<= j1.getX() + 4; i++){
+		for(int j = j1.getY() - 4; j<= j1.getY() + 4; j++){
+			if((i==j2.getX())&&(j==j2.getY())){
+				b= false;
 			}
 		}
-		return b;
+	}
+	return b;
     }
     
     /** Cette méthode crée 4 obstacles (buissons) aléatoirement sur le plateau
