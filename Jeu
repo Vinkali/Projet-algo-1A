@@ -28,7 +28,7 @@ public class Jeu{
         
         String [][] plateau = creationPlateau();
         placementJoueurAlea(plateau, j1, j2); //Place les joueurs de maniere aléatoire sur le plateau
-	creationObstacle(plateau, j1, j2);
+        creationObstacle(plateau, j1, j2);
         
         affichePlateau(plateau);
         
@@ -205,5 +205,46 @@ public class Jeu{
             System.out.println("L'Être Suprême prend de vitesse le misérable cafard qui ose se tenir sur son chemin !");
         }
         System.out.println();
+    }
+    
+    /** cette méthode déplace un personnage
+     * vers des coordonnées précises
+     * @param p le joueur qui se déplace
+     * @param plateau le plateau de jeu
+     */
+    public static String[][] deplacement(Personnage p, String[][] plateau){
+        Scanner sc = new Scanner(System.in);
+        boolean deplValide = false;
+        
+        while(deplValide==false){
+            System.out.println("sur quelle ligne veut-tu déplacer ton héros ?");
+            int i = sc.nextInt();
+            System.out.println("sur quelle colonne veut-tu déplacer ton héros ?");
+            int j = sc.nextInt();
+            
+            if(Math.abs(i-p.getY())==Math.abs(j-p.getX()) && Math.abs(i-p.getY())<=3){
+                deplValide=true;
+                p.setY(i);
+                p.setX(j);
+            }else if(Math.abs(i-p.getY())==0 && Math.abs(j-p.getX())<=3){
+                deplValide=true;
+                p.setX(j);
+            }else if(Math.abs(j-p.getX())==0 && Math.abs(i-p.getY())<=3){
+                deplValide=true;
+                p.setY(i);
+            }else if(Math.abs(j-p.getX())<Math.abs(i-p.getY()) && (Math.abs(j-p.getX())+(Math.abs(i-p.getY())- Math.abs(j-p.getX())))<=3){
+                deplValide=true;
+                p.setY(i);
+                p.setX(j);
+            }else if(Math.abs(i-p.getY())<Math.abs(j-p.getX()) && (Math.abs(i-p.getY())+(Math.abs(j-p.getX())- Math.abs(i-p.getY())))<=3){
+                deplValide=true;
+                p.setY(i);
+                p.setX(j);
+            }else{
+                System.out.println("Ton héros n'est pas assez rapide");
+            }
+        }
+        plateau[p.getX()][p.getY()]=p.getJoueur();
+        return plateau;
     }
 }
