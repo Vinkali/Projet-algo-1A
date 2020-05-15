@@ -1,8 +1,9 @@
 
+
 public class Personnage{
     private String joueur;
     private String nom;
-    private boolean joueEnPremier;
+    private boolean joueurActif;
     private int pV;
     private Attaque attaque1;
     private Attaque attaque2;
@@ -15,7 +16,7 @@ public class Personnage{
         this.attaque1 = new Attaque("rien", 1, 1);
         this.attaque2 = new Attaque("rien", 1, 1);
         this.x= 1;
-        this.y= 1;
+        this.y=1;
     }
     
     public Personnage(String joueur){
@@ -27,15 +28,21 @@ public class Personnage{
         switch(i){
 			case 1: /* Ceci est simplement un exemple, a chaque i on associe un personnage défini*/
 				this.nom = "Hector"; 
-				this.pV = 10;
-				this.attaque1 = new Attaque("Tir arc", 6, 20);
-				this.attaque2 = new Attaque("Coup de poing", 1, 50);
+				this.pV = 50;
+				this.attaque1 = new Attaque("Tir arc", 10, 10);
+				this.attaque2 = new Attaque("Coup de poing", 1, 20);
 				break;
-			/*case ... (ne pas oublier le break à la fin*/
+			case 2:
+				this.nom = "Merlin l'enchanteur"; 
+				this.pV = 50;
+				this.attaque1 = new Attaque("Jet de potion", 10, 10);
+				this.attaque2 = new Attaque("Coup de baton", 2, 20);
+				break;
+			/*case ...*/
 			case 42:
 				//ceci est un easter egg
 				this.nom = "L'Être Suprême";
-				this.joueEnPremier = true;
+				this.joueurActif = true;
 				this.pV = 4242;
 				this.attaque1 = new Attaque("Pichenette Divine", 42, 42);
 				this.attaque2 = new Attaque("Kitten-slaughtering Raging Hellfire of Dastardly DOOM", 424242, 42424242);
@@ -47,7 +54,7 @@ public class Personnage{
             System.out.println("erreur ! entre un numéro valide");
         }
         this.x= 1;
-        this.y= 1;
+        this.y=1;
     }
     
     public String getNom(){
@@ -62,6 +69,14 @@ public class Personnage{
         return this.joueur;
     }
     
+    public Attaque getAttaque(int i){
+		if(i==1){
+		 return	this.attaque1;
+		}else{
+		 return this.attaque2;	
+		}
+	}
+    
     public int getX(){
         return this.x;
     }
@@ -74,16 +89,17 @@ public class Personnage{
         this.x = x;
     } 
     
+    
     public void setY(int y){
         this.y = y;
     } 
     
-    public void setJoueEnPremier(boolean b){
-        this.joueEnPremier=b;
+    public void setJoueurActif(boolean b){
+        this.joueurActif=b;
     }
     
-    public boolean getJoueEnPremier(){
-        return this.joueEnPremier;
+    public boolean getJoueurActif(){
+        return this.joueurActif;
     }
     
     public void degat(int degat){
@@ -91,5 +107,6 @@ public class Personnage{
     }
     
 }
+
 
 
