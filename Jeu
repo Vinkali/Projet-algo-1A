@@ -41,8 +41,67 @@ public class Jeu{
         }
         deterAleaPremier(j1,j2);
         
-        
+	
+        while(finPartie(j1,j2)==false){
+		if(j1.getJoueurActif()){
+			deroulement(j1,j2, plateau);
+			j1.setJoueurActif(false);
+			j2.setJoueurActif(true);
+		}else{
+			deroulement(j2, j1, plateau);
+			j1.setJoueurActif(true);
+			j2.setJoueurActif(false);
+		}
+	}
     }
+    
+    public static void deroulement(Personnage joueur, Personnage victime, String[][] plateau){
+	System.out.println(joueur.getNom()+", c'est ton tour!");
+	
+	deplacement(joueur, plateau);
+	affichePlateau(plateau);
+	afficheVie(joueur);
+        afficheVie(victime);
+		
+	Attaque A = choixAttaque(joueur);
+	while((testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
+		System.out.println();
+		System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
+		System.out.println();
+		A = choixAttaque(joueur);
+	}
+	
+	if(A.getNom()=="attaque nulle"){
+		System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
+	}else{
+		System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
+		victime.degat(A.getDegats());	
+	}
+	afficheVie(victime);
+			
+	}
+	
+	public static Attaque choixAttaque(Personnage joueur){
+		Scanner sc = new Scanner(System.in);
+		Attaque nulle= new Attaque();
+		
+		System.out.println("Voici les attaques de ton personnage:");
+		for(int i = 1; i<3; i++){
+			System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
+		}
+		System.out.print("Entre le numéro associer à l'attaque que tu veux utiliser: ");
+		int a = sc.nextInt();
+		while((a!=0)&(a!=1)&(a!=2)){
+			System.out.print("Tu te trompes jeune guerrier, ceci n'est pas une attaque disponible, entre à nouveau un nombre: ");
+			a= sc.nextInt();
+		}
+		if((a==1)||(a==2)){
+			return joueur.getAttaque(a);
+		}else{
+			return nulle;
+		}
+	}
+    
     
     /** Cette méthode stocke le texte des règles
      */
@@ -191,15 +250,15 @@ public class Jeu{
      * @param p2 le personnage du joueur 2
      */
     public static void deterAleaPremier(Personnage p1,Personnage p2){
-        if(p1.getJoueEnPremier() == p2.getJoueEnPremier()){
+        if(p1.getJoueurActif() == p2.getJoueurActif()){
             double i = Math.random();
             if(i<0.5){
-                p1.setJoueEnPremier(true);
-                p2.setJoueEnPremier(false);
+                p1.setJoueurActif(true);
+                p2.setJoueurActif(false);
                 System.out.println(p1.getNom()+" prend de vitesse son adversaire !");
             }else{
-                p2.setJoueEnPremier(true);
-                p1.setJoueEnPremier(false);
+                p2.setJoueurActif(true);
+                p1.setJoueurActif(false);
                 System.out.println(p2.getNom()+" prend de vitesse son adversaire !");
             }
         }else{
@@ -259,5 +318,25 @@ public class Jeu{
         }
         plateau[p.getX()][p.getY()]=p.getJoueur()+" ";
         return plateau;
+    }
+    
+    public static boolean finPartie(Personnage j1, Personnage j2){
+	if((j1.getPV()<=0)||(j2.getPV()<=0)){
+		return true; 
+	}else{
+		return false;
+	}
+    }
+	
+    public static boolean testPortee(int portee, Personnage j, Personnage v){
+	boolean b= false;
+	for(int i = j.getX() - portee; i<= j.getX() + portee; i++){
+		for(int u = j.getY() - portee; u<= j.getY() + portee; u++){
+			if((i==v.getX())&&(u==v.getY())){
+				b= true;
+			}
+		}
+	}
+	return b;
     }
 }
