@@ -38,6 +38,12 @@ public class Personnage{
 				this.attaque1 = new Attaque("Jet de potion", 10, 10);
 				this.attaque2 = new Attaque("Coup de baton", 2, 20);
 				break;
+			case 3:
+				this.nom = "Inspecteur Gadget"; 
+				this.pV = 50;
+				this.attaque1 = new Attaque("GOGO GADGET AU COUP DE POING AMERICAIN", 3, 25);
+				this.attaque2 = new Attaque("GOGO GADGET FLECHETTE", 11, 5);
+				break;
 			/*case ...*/
 			case 42:
 				//ceci est un easter egg
