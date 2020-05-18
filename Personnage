@@ -45,7 +45,7 @@ public class Personnage{
 				this.nom = "Inspecteur Gadget"; 
 				this.pV = 50;
 				this.vitesse= 2;
-				this.attaque1 = new Attaque("GOGO GADGET AU COUP DE POING AMERICAIN", 3, 25);
+				this.attaque1 = new Attaque("GOGO GADGET COUP DE POING AMERICAIN", 3, 25);
 				this.attaque2 = new Attaque("GOGO GADGET FLECHETTE", 11, 8);
 				break;
 			/*case ...*/
