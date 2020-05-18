@@ -30,18 +30,21 @@ public class Personnage{
 			case 1: /* Ceci est simplement un exemple, a chaque i on associe un personnage défini*/
 				this.nom = "Hector"; 
 				this.pV = 50;
+				this.vitesse = 5;
 				this.attaque1 = new Attaque("Tir arc", 10, 10);
 				this.attaque2 = new Attaque("Coup de poing", 1, 20);
 				break;
 			case 2:
 				this.nom = "Merlin l'enchanteur"; 
 				this.pV = 50;
+				this.vitesse = 3;
 				this.attaque1 = new Attaque("Jet de potion", 10, 10);
 				this.attaque2 = new Attaque("Coup de baton", 2, 20);
 				break;
 			case 3:
 				this.nom = "Inspecteur Gadget"; 
 				this.pV = 50;
+				this.vitesse=                       //il faut la vitesse
 				this.attaque1 = new Attaque("GOGO GADGET AU COUP DE POING AMERICAIN", 3, 25);
 				this.attaque2 = new Attaque("GOGO GADGET FLECHETTE", 11, 5);
 				break;
