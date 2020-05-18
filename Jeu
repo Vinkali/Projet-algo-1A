@@ -43,42 +43,42 @@ public class Jeu{
         
 	
         while(finPartie(j1,j2)==false){
-		if(j1.getJoueurActif()){
-			deroulement(j1,j2, plateau);
-			j1.setJoueurActif(false);
-			j2.setJoueurActif(true);
-		}else{
-			deroulement(j2, j1, plateau);
-			j1.setJoueurActif(true);
-			j2.setJoueurActif(false);
-		}
-	}
+            if(j1.getJoueurActif()){
+                deroulement(j1,j2, plateau);
+                j1.setJoueurActif(false);
+                j2.setJoueurActif(true);
+            }else{
+                deroulement(j2, j1, plateau);
+                j1.setJoueurActif(true);
+                j2.setJoueurActif(false);
+            }
+        }
     }
     
     public static void deroulement(Personnage joueur, Personnage victime, String[][] plateau){
-	System.out.println(joueur.getNom()+", c'est ton tour!");
-	
-	deplacement(joueur, plateau);
-	affichePlateau(plateau);
-	afficheVie(joueur);
+        System.out.println(joueur.getNom()+", c'est ton tour!");
+        
+        deplacement(joueur, plateau);
+        affichePlateau(plateau);
+        afficheVie(joueur);
         afficheVie(victime);
 		
-	Attaque A = choixAttaque(joueur);
-	while((testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
-		System.out.println();
-		System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
-		System.out.println();
-		A = choixAttaque(joueur);
-	}
+        Attaque A = choixAttaque(joueur);
+        while((testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
+            System.out.println();
+            System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
+            System.out.println();
+            A = choixAttaque(joueur);
+        }
 	
-	if(A.getNom()=="attaque nulle"){
-		System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
-	}else{
-		System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
-		victime.degat(A.getDegats());	
-	}
-	afficheVie(victime);
-			
+        if(A.getNom()=="attaque nulle"){
+            System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
+        }else{
+            System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
+            victime.degat(A.getDegats());	
+        }
+        afficheVie(victime);
+    
 	}
 	
 	public static Attaque choixAttaque(Personnage joueur){
@@ -106,13 +106,13 @@ public class Jeu{
     /** Cette méthode stocke le texte des règles
      */
     public static String regles(){
-        return "les règles seront détaillées ici";
+        return "à chaque tour les joueurs se déplacent de 3 cases max puis attaquent leur adversaire si ils sont assez près";
     }
     
     /** Cette méthode stocke le texte de description des personnages
      */
     public static String descriptionPersos(){
-        return "ceci sera une description des personnages avec un numéro associé à chacun";
+        return "pour hector tapez 1, pour merlin tapez 2";
     }
     
     /** Cette méthode initialise les caractéristique d'un personnage à partir d'une liste de modèles prédéfinis
@@ -168,11 +168,11 @@ public class Jeu{
      */
     public static void placementJoueurAlea(String[][] plateau, Personnage j1, Personnage j2){
         while(distanceSecurite(j1, j2)==false){
-		j1.setX((int)(Math.random()*14+1));
-		j1.setY((int)(Math.random()*14+1));
-		j2.setX((int)(Math.random()*14+1));
-		j2.setY((int)(Math.random()*14+1));
-	}
+            j1.setX((int)(Math.random()*14+1));
+            j1.setY((int)(Math.random()*14+1));
+            j2.setX((int)(Math.random()*14+1));
+            j2.setY((int)(Math.random()*14+1));
+        }
 		plateau[j1.getX()][j1.getY()] = "J1 ";
 		plateau[j2.getX()][j2.getY()] = "J2 ";
     }
@@ -184,39 +184,38 @@ public class Jeu{
      * @return b le booléen
      */
     public static boolean distanceSecurite(Personnage j1, Personnage j2){
-	boolean b = true;
-	for(int i = j1.getX() - 4; i<= j1.getX() + 4; i++){
-		for(int j = j1.getY() - 4; j<= j1.getY() + 4; j++){
-			if((i==j2.getX())&&(j==j2.getY())){
-				b= false;
-			}
-		}
-	}
-	return b;
+        boolean b = true;
+        for(int i = j1.getX() - 4; i<= j1.getX() + 4; i++){
+            for(int j = j1.getY() - 4; j<= j1.getY() + 4; j++){
+                if((i==j2.getX())&&(j==j2.getY())){
+                    b= false;
+                }
+            }
+        }
+        return b;
     }
     
     /** Cette méthode crée 4 obstacles (buissons) aléatoirement sur le plateau
      * @param p le plateau, les joueurs j1 et j2
      */
     public static void creationObstacle(String[][] p, Personnage j1, Personnage j2){
-	int obstacle=0;
-	while(obstacle <= 3){
-		int a = (int) (Math.random()*12+2);
-		int b = (int) (Math.random()*12+2);
-		if(a!=j1.getX() && a!=j2.getX() && b!=j1.getY() && b!=j2.getY()){
-			if(obstacle%2==0){
-				p[a][b] = " # ";
-				p[a+1][b+1] = " # ";
-				p[a-1][b-1] = " # ";
-			}else{
-				p[a][b] = " # ";
-				p[a-1][b+1] = " # ";
-				p[a+1][b-1] = " # ";
-			}
-			obstacle ++;
-		
-		}
-	}
+        int obstacle=0;
+        while(obstacle <= 3){
+            int a = (int) (Math.random()*12+2);
+            int b = (int) (Math.random()*12+2);
+            if(a!=j1.getX() && a!=j2.getX() && b!=j1.getY() && b!=j2.getY()){
+                if(obstacle%2==0){
+                    p[a][b] = " # ";
+                    p[a+1][b+1] = " # ";
+                    p[a-1][b-1] = " # ";
+                }else{
+                    p[a][b] = " # ";
+                    p[a-1][b+1] = " # ";
+                    p[a+1][b-1] = " # ";
+                }
+                obstacle ++;
+            }
+        }
     }
     
     /** Cette méthode affiche l'état actuel du plateau de jeu
@@ -280,40 +279,36 @@ public class Jeu{
         int i=0;
         int j=0;
         
-        while(deplValide==false){
-            
-            while(coordValide==false){
-                System.out.println("sur quelle ligne veut-tu déplacer ton héros ?");
-                i = sc.nextInt();
-                System.out.println("sur quelle colonne veut-tu déplacer ton héros ?");
-                j = sc.nextInt();
-                if((0<i && i<16) && (0<j && j<16)){
-                    coordValide = true;
+        while(deplValide==false|| coordValide==false){
+            System.out.println("sur quelle ligne veut-tu déplacer ton héros ?");
+            i = sc.nextInt();
+            System.out.println("sur quelle colonne veut-tu déplacer ton héros ?");
+            j = sc.nextInt();
+            if((0<i && i<16) && (0<j && j<16)){
+                coordValide = true;
+                if(Math.abs(i-p.getX())==Math.abs(j-p.getY()) && Math.abs(i-p.getX())<=3){
+                    deplValide=true;
+                    p.setX(i);
+                    p.setY(j);
+                }else if(Math.abs(i-p.getX())==0 && Math.abs(j-p.getY())<=3){
+                    deplValide=true;
+                    p.setY(j);
+                }else if(Math.abs(j-p.getY())==0 && Math.abs(i-p.getX())<=3){
+                    deplValide=true;
+                    p.setX(i);
+                }else if(Math.abs(j-p.getY())<Math.abs(i-p.getX()) && (Math.abs(j-p.getY())+(Math.abs(i-p.getX())- Math.abs(j-p.getY())))<=3){
+                    deplValide=true;
+                    p.setX(i);
+                    p.setY(j);
+                }else if(Math.abs(i-p.getX())<Math.abs(j-p.getY()) && (Math.abs(i-p.getX())+(Math.abs(j-p.getY())- Math.abs(i-p.getX())))<=3){
+                    deplValide=true;
+                    p.setX(i);
+                    p.setY(j);
                 }else{
-                    System.out.println("Une de ces coordonnées dépasse du plateau");
+                    System.out.println("Ton héros n'est pas assez rapide, il ne peut se déplacer que de 3 cases");
                 }
-            }
-            
-            if(Math.abs(i-p.getX())==Math.abs(j-p.getY()) && Math.abs(i-p.getX())<=3){
-                deplValide=true;
-                p.setX(i);
-                p.setY(j);
-            }else if(Math.abs(i-p.getX())==0 && Math.abs(j-p.getY())<=3){
-                deplValide=true;
-                p.setY(j);
-            }else if(Math.abs(j-p.getY())==0 && Math.abs(i-p.getX())<=3){
-                deplValide=true;
-                p.setX(i);
-            }else if(Math.abs(j-p.getY())<Math.abs(i-p.getX()) && (Math.abs(j-p.getY())+(Math.abs(i-p.getX())- Math.abs(j-p.getY())))<=3){
-                deplValide=true;
-                p.setX(i);
-                p.setY(j);
-            }else if(Math.abs(i-p.getX())<Math.abs(j-p.getY()) && (Math.abs(i-p.getX())+(Math.abs(j-p.getY())- Math.abs(i-p.getX())))<=3){
-                deplValide=true;
-                p.setX(i);
-                p.setY(j);
             }else{
-                System.out.println("Ton héros n'est pas assez rapide, il ne peut se déplacer que de 3 cases");
+                System.out.println("Une de ces coordonnées dépasse du plateau");
             }
         }
         plateau[p.getX()][p.getY()]=p.getJoueur()+" ";
@@ -321,22 +316,22 @@ public class Jeu{
     }
     
     public static boolean finPartie(Personnage j1, Personnage j2){
-	if((j1.getPV()<=0)||(j2.getPV()<=0)){
-		return true; 
-	}else{
-		return false;
-	}
+        if((j1.getPV()<=0)||(j2.getPV()<=0)){
+            return true; 
+        }else{
+            return false;
+        }
     }
 	
     public static boolean testPortee(int portee, Personnage j, Personnage v){
-	boolean b= false;
-	for(int i = j.getX() - portee; i<= j.getX() + portee; i++){
-		for(int u = j.getY() - portee; u<= j.getY() + portee; u++){
-			if((i==v.getX())&&(u==v.getY())){
-				b= true;
-			}
-		}
-	}
-	return b;
+        boolean b= false;
+        for(int i = j.getX() - portee; i<= j.getX() + portee; i++){
+            for(int u = j.getY() - portee; u<= j.getY() + portee; u++){
+                if((i==v.getX())&&(u==v.getY())){
+                    b= true;
+                }
+            }
+        }
+        return b;
     }
 }
