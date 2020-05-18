@@ -55,54 +55,6 @@ public class Jeu{
         }
     }
     
-    public static void deroulement(Personnage joueur, Personnage victime, String[][] plateau){
-        System.out.println(joueur.getNom()+", c'est ton tour!");
-        
-        deplacement(joueur, plateau);
-        affichePlateau(plateau);
-        afficheVie(joueur);
-        afficheVie(victime);
-		
-        Attaque A = choixAttaque(joueur);
-        while((testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
-            System.out.println();
-            System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
-            System.out.println();
-            A = choixAttaque(joueur);
-        }
-	
-        if(A.getNom()=="attaque nulle"){
-            System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
-        }else{
-            System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
-            victime.degat(A.getDegats());	
-        }
-        afficheVie(victime);
-    
-	}
-	
-	public static Attaque choixAttaque(Personnage joueur){
-		Scanner sc = new Scanner(System.in);
-		Attaque nulle= new Attaque();
-		
-		System.out.println("Voici les attaques de ton personnage:");
-		for(int i = 1; i<3; i++){
-			System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
-		}
-		System.out.print("Entre le numéro associer à l'attaque que tu veux utiliser: ");
-		int a = sc.nextInt();
-		while((a!=0)&(a!=1)&(a!=2)){
-			System.out.print("Tu te trompes jeune guerrier, ceci n'est pas une attaque disponible, entre à nouveau un nombre: ");
-			a= sc.nextInt();
-		}
-		if((a==1)||(a==2)){
-			return joueur.getAttaque(a);
-		}else{
-			return nulle;
-		}
-	}
-    
-    
     /** Cette méthode stocke le texte des règles
      */
     public static String regles(){
@@ -145,14 +97,26 @@ public class Jeu{
     }
     
     public static String [][] creationPlateau(){
-        String [][] p= new String[17][17];
+        String [][] p= new String[19][19];
         for(int i=0; i<p.length; i++){
             for (int j=0; j<p[0].length; j++){
-                if((i==0)||(i==16)){
+                
+                if((i==0 || i==18) && j>1 && j<11){
+                    p[i][j]= " " + String.valueOf(j-1) +" "; //on affiche le numéro des lignes et des colonnes
+                }else if((i==0 || i==18) && j>10 && j<17){
+                    p[i][j]= " " + String.valueOf(j-1);
+                }else if((j==0 || j==18) && i>1 && i<11){
+                    p[i][j]= " " + String.valueOf(i-1) +" ";
+                }else if((j==0 || j==18) && i>10 && i<17){
+                    p[i][j]= " " + String.valueOf(i-1);
+                }else if((j==0 || j==18) && (i==0 || i==18)){
+                    p[i][j]= " X ";
+                    
+                }else if((i==1)||(i==17)){
                     p[i][j]="---"; //On délimite le plateau pour qu'il soit bien visible par les joueurs
-                }else if((j==0)){
+                }else if((j==1)){
                     p[i][j]="|  ";
-                }else if((j==16)){
+                }else if((j==17)){
                     p[i][j]="  |";
                 }else{
                     p[i][j]=" . "; //L'intérieur du plateau est rempli de points pour bien distinguer les différentes positions, et les distances
@@ -168,10 +132,10 @@ public class Jeu{
      */
     public static void placementJoueurAlea(String[][] plateau, Personnage j1, Personnage j2){
         while(distanceSecurite(j1, j2)==false){
-            j1.setX((int)(Math.random()*14+1));
-            j1.setY((int)(Math.random()*14+1));
-            j2.setX((int)(Math.random()*14+1));
-            j2.setY((int)(Math.random()*14+1));
+            j1.setX((int)(Math.random()*14+2));
+            j1.setY((int)(Math.random()*14+2));
+            j2.setX((int)(Math.random()*14+2));
+            j2.setY((int)(Math.random()*14+2));
         }
 		plateau[j1.getX()][j1.getY()] = "J1 ";
 		plateau[j2.getX()][j2.getY()] = "J2 ";
@@ -201,8 +165,8 @@ public class Jeu{
     public static void creationObstacle(String[][] p, Personnage j1, Personnage j2){
         int obstacle=0;
         while(obstacle <= 3){
-            int a = (int) (Math.random()*12+2);
-            int b = (int) (Math.random()*12+2);
+            int a = (int) (Math.random()*12+3);
+            int b = (int) (Math.random()*12+3);
             if(a!=j1.getX() && a!=j2.getX() && b!=j1.getY() && b!=j2.getY()){
                 if(obstacle%2==0){
                     p[a][b] = " # ";
@@ -266,26 +230,54 @@ public class Jeu{
         System.out.println();
     }
     
+    public static void deroulement(Personnage joueur, Personnage victime, String[][] plateau){
+        System.out.println(joueur.getNom()+", c'est ton tour!");
+        
+        deplacement(joueur, victime, plateau);
+        affichePlateau(plateau);
+        afficheVie(joueur);
+        afficheVie(victime);
+		
+        Attaque A = choixAttaque(joueur);
+        System.out.println();
+        while((testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
+            System.out.println();
+            System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
+            System.out.println();
+            A = choixAttaque(joueur);
+        }
+	
+        if(A.getNom()=="attaque nulle"){
+            System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
+        }else{
+            System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
+            victime.degat(A.getDegats());	
+        }
+        System.out.println();
+        afficheVie(victime);
+        afficheVie(joueur);
+    
+	}
+	
     /** cette méthode déplace un personnage
      * vers des coordonnées précises
      * @param p le joueur qui se déplace
      * @param plateau le plateau de jeu
      */
-    public static String[][] deplacement(Personnage p, String[][] plateau){
+    public static String[][] deplacement(Personnage p, Personnage autre, String[][] plateau){
         Scanner sc = new Scanner(System.in);
         boolean deplValide = false;
-        boolean coordValide = false;
         plateau[p.getX()][p.getY()] = " . ";
         int i=0;
         int j=0;
         
-        while(deplValide==false|| coordValide==false){
-            System.out.println("sur quelle ligne veut-tu déplacer ton héros ?");
-            i = sc.nextInt();
+        while(deplValide==false){
             System.out.println("sur quelle colonne veut-tu déplacer ton héros ?");
-            j = sc.nextInt();
-            if((0<i && i<16) && (0<j && j<16)){
-                coordValide = true;
+            j = sc.nextInt()+1;
+            System.out.println("sur quelle ligne veut-tu déplacer ton héros ?");
+            i = sc.nextInt()+1;
+            if((1<i && i<17) && (1<j && j<17) && (i!=autre.getX() || j!=autre.getY())){
+                
                 if(Math.abs(i-p.getX())==Math.abs(j-p.getY()) && Math.abs(i-p.getX())<=3){
                     deplValide=true;
                     p.setX(i);
@@ -308,21 +300,34 @@ public class Jeu{
                     System.out.println("Ton héros n'est pas assez rapide, il ne peut se déplacer que de 3 cases");
                 }
             }else{
-                System.out.println("Une de ces coordonnées dépasse du plateau");
+                System.out.println("Une de ces coordonnées dépasse du plateau ou ton adversaire occupe déjà cette case");
             }
         }
         plateau[p.getX()][p.getY()]=p.getJoueur()+" ";
         return plateau;
     }
     
-    public static boolean finPartie(Personnage j1, Personnage j2){
-        if((j1.getPV()<=0)||(j2.getPV()<=0)){
-            return true; 
-        }else{
-            return false;
-        }
-    }
-	
+	public static Attaque choixAttaque(Personnage joueur){
+		Scanner sc = new Scanner(System.in);
+		Attaque nulle= new Attaque();
+		
+		System.out.println("Voici les attaques de ton personnage:");
+		for(int i = 1; i<3; i++){
+			System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
+		}
+		System.out.print("Entre le numéro associé à l'attaque que tu veux utiliser: ");
+		int a = sc.nextInt();
+		while((a!=0)&(a!=1)&(a!=2)){
+			System.out.print("Tu te trompes jeune guerrier, ceci n'est pas une attaque disponible, entre à nouveau un nombre: ");
+			a= sc.nextInt();
+		}
+		if((a==1)||(a==2)){
+			return joueur.getAttaque(a);
+		}else{
+			return nulle;
+		}
+	}
+    
     public static boolean testPortee(int portee, Personnage j, Personnage v){
         boolean b= false;
         for(int i = j.getX() - portee; i<= j.getX() + portee; i++){
@@ -333,5 +338,19 @@ public class Jeu{
             }
         }
         return b;
+    }
+    
+    public static boolean finPartie(Personnage j1, Personnage j2){
+        if(j1.getPV()<=0){
+            System.out.println(j2.getNom() + " remporte ce combat !");
+            System.out.println();
+            return true;
+        }else if(j2.getPV()<=0){
+            System.out.println(j1.getNom() + " remporte ce combat !");
+            System.out.println();
+            return true; 
+        }else{
+            return false;
+        }
     }
 }
