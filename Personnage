@@ -8,8 +8,11 @@ public class Personnage{
     private int vitesse;
     private Attaque attaque1;
     private Attaque attaque2;
+    private Attaque attaque3;
+    private int cooldownAtk3;
     private int x;
     private int y;
+    
     
     public Personnage(){ //Constructeur par défaut, on pourra le supprimer quand on aura défini les persos
         this.nom = "personne";
@@ -30,21 +33,21 @@ public class Personnage{
 			case 1: /* Ceci est simplement un exemple, a chaque i on associe un personnage défini*/
 				this.nom = "Hector"; 
 				this.pV = 50;
-				this.vitesse = 5;
+                this.vitesse = 5;
 				this.attaque1 = new Attaque("Tir arc", 10, 10);
 				this.attaque2 = new Attaque("Coup de poing", 1, 20);
 				break;
 			case 2:
 				this.nom = "Merlin l'enchanteur"; 
 				this.pV = 50;
-				this.vitesse = 3;
+                this.vitesse = 3;
 				this.attaque1 = new Attaque("Jet de potion", 10, 10);
 				this.attaque2 = new Attaque("Coup de baton", 2, 20);
 				break;
-			case 3:
+            case 3:
 				this.nom = "Inspecteur Gadget"; 
 				this.pV = 50;
-				this.vitesse= 2;
+                this.vitesse = 2;
 				this.attaque1 = new Attaque("GOGO GADGET COUP DE POING AMERICAIN", 3, 25);
 				this.attaque2 = new Attaque("GOGO GADGET FLECHETTE", 11, 8);
 				break;
@@ -54,6 +57,7 @@ public class Personnage{
 				this.nom = "L'Être Suprême";
 				this.joueurActif = true;
 				this.pV = 4242;
+                this.vitesse = 42;
 				this.attaque1 = new Attaque("Pichenette Divine", 42, 42);
 				this.attaque2 = new Attaque("Kitten-slaughtering Raging Hellfire of Dastardly DOOM", 424242, 42424242);
 				System.out.println();
@@ -81,10 +85,12 @@ public class Personnage{
     
     public Attaque getAttaque(int i){
 		if(i==1){
-		 return	this.attaque1;
+            return this.attaque1;
+		}else if(i==2){
+            return this.attaque2;	
 		}else{
-		 return this.attaque2;	
-		}
+            return this.attaque3;
+        }
 	}
     
     public int getX(){
@@ -114,6 +120,10 @@ public class Personnage{
     
     public int getVitesse(){
         return this.vitesse;
+    }
+    
+    public int getCooldown(){
+        return this.cooldownAtk3;
     }
     
     public void degat(int degat){
