@@ -317,11 +317,11 @@ public class Jeu{
 		}
 		System.out.print("Entre le numéro associé à l'attaque que tu veux utiliser: ");
 		int a = sc.nextInt();
-		while((a!=0)&(a!=1)&(a!=2)){
+		while((a<0)||(a>3)){
 			System.out.print("Tu te trompes jeune guerrier, ceci n'est pas une attaque disponible, entre à nouveau un nombre: ");
 			a= sc.nextInt();
 		}
-		if((a==1)||(a==2)){
+		if((a==1)||(a==2)||(a==3 && joueur.getCooldown()==0)){
 			return joueur.getAttaque(a);
 		}else{
 			return nulle;
