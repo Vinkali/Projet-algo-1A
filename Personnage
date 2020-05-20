@@ -126,6 +126,10 @@ public class Personnage{
         return this.cooldownAtk3;
     }
     
+    public void setCooldown(int i){
+        this.cooldownAtk3=i;
+    }
+    
     public void degat(int degat){
         this.pV = this.pV - degat;
     }
