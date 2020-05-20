@@ -233,6 +233,12 @@ public class Jeu{
     public static void deroulement(Personnage joueur, Personnage victime, String[][] plateau){
         System.out.println(joueur.getNom()+", c'est ton tour!");
         
+        if(joueur.getCooldown()==0){
+            joueur.setCooldown(3);
+        }else{
+            joueur.setCooldown(joueur.getCooldown()-1);
+        }
+        
         deplacement(joueur, victime, plateau);
         affichePlateau(plateau);
         afficheVie(joueur);
