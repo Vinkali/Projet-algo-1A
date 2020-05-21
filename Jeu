@@ -3,7 +3,18 @@
 
 
 
-/* demander au prof :
+/* 
+ * 
+ * 
+ * 
+ * 
+ * /!\ tel quel on peut pas garder l'atk 3 "chargée"
+ * 
+ * 
+ * 
+ * 
+ * 
+ * demander au prof :
  * si il faut écrire les @see get et set dans la javadoc
  * si on peut éviter le crash quand l'utilisateur tape autre chose que ce que le scanner cherche (comme une lettre au lieu d'un int)
  */
