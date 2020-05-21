@@ -33,54 +33,55 @@ public class Personnage{
         this.joueur = joueur;
         this.cooldownAtk3 = 4;
         switch(i){
-			case 1: /* Ceci est simplement un exemple, a chaque i on associe un personnage défini*/
-				this.nom = "Hector"; 
-				this.pV = 50;
-                this.vitesse = 5;
-				this.attaque1 = new Attaque("Tir arc", 10, 10);
-				this.attaque2 = new Attaque("Coup de poing", 1, 20);
-                this.attaque3 = new Attaque("Uppercut", 1, 30);
-				break;
-			case 2:
-				this.nom = "Merlin l'enchanteur"; 
-				this.pV = 50;
-                this.vitesse = 3;
-				this.attaque1 = new Attaque("Jet de potion", 10, 10);
-				this.attaque2 = new Attaque("Coup de baton", 2, 20);
-                this.attaque3 = new Attaque("boule de feu", 20, 20);
-				break;
-            case 3:
-				this.nom = "Inspecteur Gadget"; 
-				this.pV = 50;
-                this.vitesse = 2;
-				this.attaque1 = new Attaque("GOGO GADGET COUP DE POING AMERICAIN", 3, 25);
-				this.attaque2 = new Attaque("GOGO GADGET FLECHETTE", 11, 8);
-				break;
-            case 4:
-                this.nom = "Gimli fils de Glóin";
-                this.pV = 100;
-                this.vitesse = 1;
-                this.attaque1 = new Attaque("Coup de hache", 1, 40);
-                this.attaque2 = new Attaque("Lancer de hache", 2, 25);
-                this.attaque3 = new Attaque("Charge du nain", 3, 50);
-                break;
-			/*case ...*/
-			case 42:
-				//ceci est un easter egg
-				this.nom = "L'Être Suprême";
-				this.joueurActif = true;
-				this.pV = 4242;
-                this.vitesse = 42;
-                this.cooldownAtk3=1;
-				this.attaque1 = new Attaque("Pluie de salade nicoise", 42, 42);
-				this.attaque2 = new Attaque("Lancer de noix de coco", 4242, 424242);
-				this.attaque3 = new Attaque("Explosion de rollers nucléaires", 424242, 42424242);
-                System.out.println();
-				System.out.println("    <(^_^)>   bravo tu es cheaté.e   <(^_^)>");
-				System.out.println();
-				break;
-			default:
-            System.out.println("erreur ! entre un numéro valide");
+		case 1: /* Ceci est simplement un exemple, a chaque i on associe un personnage défini*/
+			this.nom = "Hector"; 
+			this.pV = 50;
+          		this.vitesse = 5;
+			this.attaque1 = new Attaque("Tir arc", 10, 10);
+			this.attaque2 = new Attaque("Coup de poing", 1, 20);
+               		this.attaque3 = new Attaque("Uppercut", 1, 30);
+			break;
+		case 2:
+			this.nom = "Merlin l'enchanteur"; 
+			this.pV = 50;
+               		this.vitesse = 3;
+			this.attaque1 = new Attaque("Jet de potion", 10, 10);
+			this.attaque2 = new Attaque("Coup de baton", 2, 20);
+               		this.attaque3 = new Attaque("Boule de feu", 20, 20);
+			break;
+          	case 3:
+			this.nom = "Inspecteur Gadget"; 
+			this.pV = 50;
+                	this.vitesse = 2;
+			this.attaque1 = new Attaque("GOGO GADGET COUP DE POING AMERICAIN", 3, 25);
+			this.attaque2 = new Attaque("GOGO GADGET FLECHETTE", 11, 8);
+			this.attaque3 = new Attaque("GOGO GADGET MISSILE", 11, 20);
+			break;
+         	case 4:
+                	this.nom = "Gimli fils de Glóin";
+	                this.pV = 100;
+        	        this.vitesse = 1;
+                	this.attaque1 = new Attaque("Coup de hache", 1, 40);
+	                this.attaque2 = new Attaque("Lancer de hache", 2, 25);
+        	        this.attaque3 = new Attaque("Charge du nain", 3, 50);
+                	break;
+		/*case ...*/
+		case 42:
+			//ceci est un easter egg
+			this.nom = "L'Être Suprême";
+			this.joueurActif = true;
+			this.pV = 4242;
+	                this.vitesse = 42;
+	                this.cooldownAtk3=1;
+			this.attaque1 = new Attaque("Pluie de salade nicoise", 42, 42);
+			this.attaque2 = new Attaque("Lancer de noix de coco", 4242, 424242);
+			this.attaque3 = new Attaque("Explosion de rollers nucléaires", 424242, 42424242);
+        	        System.out.println();
+			System.out.println("    <(^_^)>   bravo tu es cheaté.e   <(^_^)>");
+			System.out.println();
+			break;
+		default:
+	        	System.out.println("erreur ! entre un numéro valide");
         }
         this.x= 1;
         this.y=1;
