@@ -94,7 +94,9 @@ public class Jeu{
             j = new Personnage(j.getJoueur(),i);
             
             if(j.getNom() != null){
-                System.out.println("Tu veux incarner "+j.getNom()+" ? entre 1 si oui et 2 si non");
+                String newLine= System.getProperty("line.separator");
+                System.out.println("Tu veux incarner "+j.getNom()+"? Ce combatant a "+j.getPV()+"PV et dispose de "+j.getVitesse()+" points de vitesse."
+                +newLine+"Entre 1 si oui et 2 si non");
                 if(sc.nextInt()==1){
                     confirmation=true;
                 }else{
