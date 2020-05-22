@@ -65,6 +65,14 @@ public class Personnage{
 	                this.attaque2 = new Attaque("Lancer de hache", 2, 25);
         	        this.attaque3 = new Attaque("Charge du nain", 3, 50);
                 	break;
+		case 5:
+			this.nom = "Ichigo";
+			this.pV= 50;
+			this.vitesse= 5
+			this.attaque1 = new Attaque("Lancé de shuriken",20,5);
+			this.attaque2 = new Attaque("Découpage au sabra",1,20);
+			this.attaque3 = new Attaque("Lame du dragon",5,35);
+			break;
 		/*case ...*/
 		case 42:
 			//ceci est un easter egg
