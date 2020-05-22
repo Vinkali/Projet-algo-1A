@@ -68,10 +68,18 @@ public class Personnage{
 		case 5:
 			this.nom = "Ichigo";
 			this.pV= 50;
-			this.vitesse= 5
-			this.attaque1 = new Attaque("Lancé de shuriken",20,5);
-			this.attaque2 = new Attaque("Découpage au sabra",1,20);
+			this.vitesse= 5;
+			this.attaque1 = new Attaque("Lancer de shuriken",20,5);
+			this.attaque2 = new Attaque("Découpage au sabre",1,20);
 			this.attaque3 = new Attaque("Lame du dragon",5,35);
+			break;
+		case 6:
+			this.nom = "Zhibago",
+			this.pV= 40;
+			this.vitesse=10;
+			this.attaque1 = new Attaque("Tranchant"2,10,);
+			this.attaque2 = new Attaque("Griffe acérée"2,20,);
+			this.attaque3 = new Attaque("Régénération bestiale"2,30,);
 			break;
 		/*case ...*/
 		case 42:
