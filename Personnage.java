@@ -74,12 +74,12 @@ public class Personnage{
 			this.attaque3 = new Attaque("Lame du dragon",5,35);
 			break;
 		case 6:
-			this.nom = "Zhivago",
+			this.nom = "Zhivago";
 			this.pV= 40;
 			this.vitesse=10;
-			this.attaque1 = new Attaque("Tranchant"2,10,);
-			this.attaque2 = new Attaque("Griffe acérée"2,20,);
-			this.attaque3 = new Attaque("Régénération bestiale"2,30,);
+			this.attaque1 = new Attaque("Tranchant",2,10);
+			this.attaque2 = new Attaque("Griffe acérée",2,20);
+			this.attaque3 = new Attaque("Régénération bestiale",2,30);
 			break;
 		/*case ...*/
 		case 42:
