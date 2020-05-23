@@ -66,7 +66,7 @@ public class Jeu{
     /** Cette méthode stocke le texte de description des personnages
      */
     public static String descriptionPersos(){
-        return "1: Hector | 2: Merlin | 3: Inspecteur gadget | 4: Gimli";
+        return "1: Hector | 2: Merlin | 3: Inspecteur gadget | 4: Gimli | 5: Ichigo | 6: Zhivago";
     }
     
     /** Cette méthode initialise les caractéristique d'un personnage à partir d'une liste de modèles prédéfinis
