@@ -5,15 +5,6 @@
 
 /* 
  * 
- * 
- * 
- * 
- * /!\ tel quel on peut pas garder l'atk 3 "chargée"
- * 
- * 
- * 
- * 
- * 
  * demander au prof :
  * si il faut écrire les @see get et set dans la javadoc
  * si on peut éviter le crash quand l'utilisateur tape autre chose que ce que le scanner cherche (comme une lettre au lieu d'un int)
@@ -251,9 +242,7 @@ public class Jeu{
     public static void deroulement(Personnage joueur, Personnage victime, String[][] plateau){
         System.out.println(joueur.getNom()+", c'est ton tour!");
         
-        if(joueur.getCooldown()==0){
-            joueur.setCooldown(3);
-        }else{
+        if(joueur.getCooldown()>0){
             joueur.setCooldown(joueur.getCooldown()-1);
         }
         
@@ -349,9 +338,17 @@ public class Jeu{
 			System.out.print("Tu te trompes jeune guerrier, ceci n'est pas une attaque disponible, entre à nouveau un nombre: ");
 			a= sc.nextInt();
 		}
-		if((a==1)||(a==2)||(a==3 && joueur.getCooldown()==0)){
+        
+        while(a==3 && joueur.getCooldown()!=0){
+            System.out.print("Cette attaque ne sera disponible que dans "+joueur.getCooldown()+" tours, entre à nouveau un nombre: ");
+			a= sc.nextInt();
+        }
+		if((a==1)||(a==2)){
 			return joueur.getAttaque(a);
-		}else{
+		}else if(a==3 && joueur.getCooldown()==0){
+            joueur.setCooldown(3);
+            return joueur.getAttaque(a);
+        }else{
 			return nulle;
 		}
 	}
