@@ -19,6 +19,7 @@ public class Jeu{
     public static void main(String [] args){
         Personnage j1=new Personnage("J1");
         Personnage j2=new Personnage("J2");
+        int nbBonus = 0;
         
         System.out.println(regles());
         System.out.println();
@@ -31,7 +32,7 @@ public class Jeu{
         String [][] plateau = creationPlateau();
         placementJoueurAlea(plateau, j1, j2); //Place les joueurs de maniere aléatoire sur le plateau
         creationForet(plateau, j1, j2);
-        creationBonus(plateau, j1, j2);
+        nbBonus = creationBonus(plateau, j1, j2, nbBonus);
         
         affichePlateau(plateau);
         
@@ -47,11 +48,11 @@ public class Jeu{
 	
         while(finPartie(j1,j2)==false){
             if(j1.getJoueurActif()){
-                deroulement(j1,j2, plateau);
+                nbBonus = deroulement(j1,j2, plateau, nbBonus);
                 j1.setJoueurActif(false);
                 j2.setJoueurActif(true);
             }else{
-                deroulement(j2, j1, plateau);
+                nbBonus = deroulement(j2, j1, plateau, nbBonus);
                 j1.setJoueurActif(true);
                 j2.setJoueurActif(false);
             }
@@ -198,28 +199,28 @@ public class Jeu{
      * @param j1 le joueur 1
      * @param j2 le joueur 2
      */
-    public static void creationBonus(String[][] p, Personnage j1, Personnage j2){
-        int bonus = 0;
+    public static int creationBonus(String[][] p, Personnage j1, Personnage j2, int bonus){
         while(bonus < 3){
             int a = (int) (Math.random()*12+3);
             int b = (int) (Math.random()*12+3);
-            boolean touchePerso = false;
+            boolean caseOccupee = false;
             for(int u= a-1; u<=a+1; u++){
 				for(int v=b-1; v<=b+1; v++){
 					if(((u==j1.getX() && v==j1.getY()) || (v==j2.getY() && u==j2.getX())) || u<2 || u>17 || v<2 || v>17){
-						touchePerso=true;
+						caseOccupee=true;
 					}
 				}
 			}
-            if(p[a][b] == " # "){
-                touchePerso=true;
+            if(p[a][b] == " # " || p[a][b] == "(+)"){
+                caseOccupee=true;
             }
             
-            if(touchePerso==false){
+            if(caseOccupee==false){
                 p[a][b]="(+)";
 				bonus ++;
             }
         }
+        return bonus;
     } 
     
     /** Cette méthode affiche l'état actuel du plateau de jeu
@@ -270,14 +271,14 @@ public class Jeu{
         System.out.println();
     }
     
-    public static void deroulement(Personnage joueur, Personnage victime, String[][] plateau){
+    public static int deroulement(Personnage joueur, Personnage victime, String[][] plateau, int bonus){
         System.out.println(joueur.getNom()+", c'est ton tour!");
         
         if(joueur.getCooldown()>0){
             joueur.setCooldown(joueur.getCooldown()-1);
         }
         
-        deplacement(joueur, victime, plateau);
+        bonus = deplacement(joueur, victime, plateau, bonus);
         affichePlateau(plateau);
         afficheVie(joueur);
         afficheVie(victime);
@@ -300,7 +301,8 @@ public class Jeu{
         System.out.println();
         afficheVie(victime);
         afficheVie(joueur);
-    
+        bonus = creationBonus(plateau, joueur, victime, bonus);
+        return bonus;
 	}
 	
     /** cette méthode déplace un personnage
@@ -308,7 +310,7 @@ public class Jeu{
      * @param p le joueur qui se déplace
      * @param plateau le plateau de jeu
      */
-    public static String[][] deplacement(Personnage p, Personnage autre, String[][] plateau){
+    public static int deplacement(Personnage p, Personnage autre, String[][] plateau, int bonus){
         Scanner sc = new Scanner(System.in);
         boolean deplValide = false;
         if(plateau[p.getX()][p.getY()] != " # "){
@@ -351,11 +353,14 @@ public class Jeu{
         }
 		if(plateau[p.getX()][p.getY()]!=" # "){	
 			plateau[p.getX()][p.getY()]=p.getJoueur()+" ";
+            System.out.println(p.getNom()+" se cache dans une forêt !");
 		}
         if(plateau[p.getX()][p.getY()]=="(+)"){
             p.setPV(p.getPV()+10);
+            bonus--;
+            System.out.println(p.getNom()+" récupère un bonus et regagne 10 PV !");
         }
-        return plateau;
+        return bonus;
     }
     
 	public static Attaque choixAttaque(Personnage joueur){
