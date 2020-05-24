@@ -111,6 +111,10 @@ public class Personnage{
         return this.pV;
     }
     
+    public void setPV(int i){
+        this.pV=i;
+    }
+    
     public String getJoueur(){
         return this.joueur;
     }
