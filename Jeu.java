@@ -31,6 +31,7 @@ public class Jeu{
         String [][] plateau = creationPlateau();
         placementJoueurAlea(plateau, j1, j2); //Place les joueurs de maniere aléatoire sur le plateau
         creationForet(plateau, j1, j2);
+        creationBonus(plateau, j1, j2);
         
         affichePlateau(plateau);
         
@@ -168,8 +169,8 @@ public class Jeu{
      * @param p le plateau, les joueurs j1 et j2
      */
     public static void creationForet(String[][] p, Personnage j1, Personnage j2){
-        int foret=1;
-        while(foret <= 3){
+        int foret=0;
+        while(foret < 3){
             int a = (int) (Math.random()*12+3);
             int b = (int) (Math.random()*12+3);
             boolean touchePerso= false;
@@ -190,6 +191,36 @@ public class Jeu{
             }
         }
     }
+    
+    /**Cette méthode place sur le plateau 
+     * des bonus qui rendent de la vie aux joueurs
+     * @param p le plateau
+     * @param j1 le joueur 1
+     * @param j2 le joueur 2
+     */
+    public static void creationBonus(String[][] p, Personnage j1, Personnage j2){
+        int bonus = 0;
+        while(bonus < 3){
+            int a = (int) (Math.random()*12+3);
+            int b = (int) (Math.random()*12+3);
+            boolean touchePerso = false;
+            for(int u= a-1; u<=a+1; u++){
+				for(int v=b-1; v<=b+1; v++){
+					if(((u==j1.getX() && v==j1.getY()) || (v==j2.getY() && u==j2.getX())) || u<2 || u>17 || v<2 || v>17){
+						touchePerso=true;
+					}
+				}
+			}
+            if(p[a][b] == " # "){
+                touchePerso=true;
+            }
+            
+            if(touchePerso==false){
+                p[a][b]="(+)";
+				bonus ++;
+            }
+        }
+    } 
     
     /** Cette méthode affiche l'état actuel du plateau de jeu
      * @param p le plateau à afficher
@@ -321,6 +352,9 @@ public class Jeu{
 		if(plateau[p.getX()][p.getY()]!=" # "){	
 			plateau[p.getX()][p.getY()]=p.getJoueur()+" ";
 		}
+        if(plateau[p.getX()][p.getY()]=="(+)"){
+            p.setPV(p.getPV()+10);
+        }
         return plateau;
     }
     
