@@ -27,5 +27,9 @@ public class Attaque{
 	return this.degats;
   }
   
+  public void baisseDegats(){
+  	this.degats= (int) (this.degats * (4.0/5.0));
+  }
+  
 }
 
