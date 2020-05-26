@@ -296,7 +296,8 @@ public class Jeu{
             System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
         }else{
             System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
-            victime.degat(A.getDegats());	
+            victime.degat(A.getDegats());
+	    A.baisseDegats();
         }
         System.out.println();
         afficheVie(victime);
@@ -320,9 +321,9 @@ public class Jeu{
         int j=0;
         
         while(deplValide==false){
-            System.out.println("sur quelle colonne veut-tu déplacer ton héros ?");
+            System.out.println("sur quelle colonne veux-tu déplacer ton héros ?");
             j = sc.nextInt()+1;
-            System.out.println("sur quelle ligne veut-tu déplacer ton héros ?");
+            System.out.println("sur quelle ligne veux-tu déplacer ton héros ?");
             i = sc.nextInt()+1;
             if((1<i && i<17) && (1<j && j<17) && (i!=autre.getX() || j!=autre.getY())){
                 
@@ -353,7 +354,8 @@ public class Jeu{
         }
 		if(plateau[p.getX()][p.getY()]!=" # "){	
 			plateau[p.getX()][p.getY()]=p.getJoueur()+" ";
-            System.out.println(p.getNom()+" se cache dans une forêt !");
+		}else{
+			System.out.println(p.getNom()+" se cache dans une forêt !");
 		}
         if(plateau[p.getX()][p.getY()]=="(+)"){
             p.setPV(p.getPV()+10);
