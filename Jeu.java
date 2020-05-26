@@ -278,7 +278,7 @@ public class Jeu{
     }
     
     public static int deroulement(Personnage joueur, Personnage victime, String[][] plateau, int bonus){
-        System.out.println(joueur.getNom()+", c'est ton tour!");
+        System.out.println(joueur.getJoueur()+", c'est ton tour!");
         
         if(joueur.getCooldown()>0){
             joueur.setCooldown(joueur.getCooldown()-1);
@@ -376,7 +376,7 @@ public class Jeu{
 		Attaque nulle= new Attaque();
 		
 		System.out.println("Voici les attaques de ton personnage:");
-		for(int i = 1; i<3; i++){
+		for(int i = 1; i<4; i++){
 			System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
 		}
 		System.out.print("Entre le numéro associé à l'attaque que tu veux utiliser: ");
