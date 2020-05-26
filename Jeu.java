@@ -17,8 +17,14 @@ import java.util.Scanner;
 public class Jeu{
     
     public static void main(String [] args){
-        Personnage j1=new Personnage("J1");
-        Personnage j2=new Personnage("J2");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Bienvenue dans l'arène !");
+        System.out.println();
+        System.out.println("Quel est ton nom, ô valeureux stratège ?");
+        Personnage j1 = new Personnage(sc.nextLine());
+        System.out.println();
+        System.out.println("Et toi, ô brillant tacticien ?");
+        Personnage j2 = new Personnage(sc.nextLine());
         int nbBonus = 0;
         
         System.out.println(regles());
