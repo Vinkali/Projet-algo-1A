@@ -3,6 +3,7 @@
 public class Personnage{
     private String joueur;
     private String nom;
+    private String symbole;
     private boolean joueurActif;
     private int pV;
     private int vitesse;
@@ -170,6 +171,13 @@ public class Personnage{
         this.pV = this.pV - degat;
     }
     
+    public String getSymbole(){
+        return this.symbole;
+    }
+    
+    public void setSymbole(String s){
+        this.symbole = s;
+    }
 }
 
 

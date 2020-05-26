@@ -35,6 +35,8 @@ public class Jeu{
         j1 = choixPerso(j1);
         j2 = choixPerso(j2);
         
+        deterAleaPremier(j1,j2);
+        
         String [][] plateau = creationPlateau();
         placementJoueurAlea(plateau, j1, j2); //Place les joueurs de maniere aléatoire sur le plateau
         creationForet(plateau, j1, j2);
@@ -49,7 +51,6 @@ public class Jeu{
             System.out.println("Quelle est cette sorcellerie ? "+j1.getNom()+" affronte son double !");
             System.out.println();
         }
-        deterAleaPremier(j1,j2);
         
 	
         while(finPartie(j1,j2)==false){
@@ -108,6 +109,34 @@ public class Jeu{
         return j;
     }
     
+    /** Cette méthode détermine aléatoirement quel joueur commence
+     * et stocke cette information dans un attribut de la classe Personnage
+     * sauf si un des joueurs a trouvé l'easter egg, auquel cas il commence en premier d'office
+     * @param p1 le personnage du joueur 1
+     * @param p2 le personnage du joueur 2
+     */
+    public static void deterAleaPremier(Personnage p1,Personnage p2){
+        if(p1.getJoueurActif() == p2.getJoueurActif()){
+            double i = Math.random();
+            if(i<0.5){
+                p1.setJoueurActif(true);
+                p2.setJoueurActif(false);
+                p1.setSymbole("J1");
+                p2.setSymbole("J2");
+                System.out.println(p1.getNom()+" prend de vitesse son adversaire !");
+            }else{
+                p2.setJoueurActif(true);
+                p1.setJoueurActif(false);
+                p2.setSymbole("J1");
+                p1.setSymbole("J2");
+                System.out.println(p2.getNom()+" prend de vitesse son adversaire !");
+            }
+        }else{
+            System.out.println("L'Être Suprême prend de vitesse le misérable cafard qui ose se tenir sur son chemin !");
+        }
+        System.out.println();
+    }
+    
     public static String [][] creationPlateau(){
         String [][] p= new String[19][19];
         for(int i=0; i<p.length; i++){
@@ -149,8 +178,8 @@ public class Jeu{
             j2.setX((int)(Math.random()*14+2));
             j2.setY((int)(Math.random()*14+2));
         }
-		plateau[j1.getX()][j1.getY()] = "J1 ";
-		plateau[j2.getX()][j2.getY()] = "J2 ";
+		plateau[j1.getX()][j1.getY()] = j1.getSymbole()+" ";
+		plateau[j2.getX()][j2.getY()] = j2.getSymbole()+" ";
     }
     
     /** Cette méthode vérfie si les deux joueurs ne sont pas 
@@ -253,30 +282,6 @@ public class Jeu{
         System.out.println();
     }
     
-    /** Cette méthode détermine aléatoirement quel joueur commence
-     * et stocke cette information dans un attribut de la classe Personnage
-     * sauf si un des joueurs a trouvé l'easter egg, auquel cas il commence en premier d'office
-     * @param p1 le personnage du joueur 1
-     * @param p2 le personnage du joueur 2
-     */
-    public static void deterAleaPremier(Personnage p1,Personnage p2){
-        if(p1.getJoueurActif() == p2.getJoueurActif()){
-            double i = Math.random();
-            if(i<0.5){
-                p1.setJoueurActif(true);
-                p2.setJoueurActif(false);
-                System.out.println(p1.getNom()+" prend de vitesse son adversaire !");
-            }else{
-                p2.setJoueurActif(true);
-                p1.setJoueurActif(false);
-                System.out.println(p2.getNom()+" prend de vitesse son adversaire !");
-            }
-        }else{
-            System.out.println("L'Être Suprême prend de vitesse le misérable cafard qui ose se tenir sur son chemin !");
-        }
-        System.out.println();
-    }
-    
     public static int deroulement(Personnage joueur, Personnage victime, String[][] plateau, int bonus){
         System.out.println(joueur.getJoueur()+", c'est ton tour!");
         
@@ -359,7 +364,7 @@ public class Jeu{
             }
         }
 		if(plateau[p.getX()][p.getY()]!=" # "){	
-			plateau[p.getX()][p.getY()]=p.getJoueur()+" ";
+			plateau[p.getX()][p.getY()]=p.getSymbole()+" ";
 		}else{
 			System.out.println(p.getNom()+" se cache dans une forêt !");
 		}
