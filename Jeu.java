@@ -365,16 +365,17 @@ public class Jeu{
                 System.out.println("Une de ces coordonnées dépasse du plateau ou ton adversaire occupe déjà cette case");
             }
         }
-		if(plateau[p.getX()][p.getY()]!=" # "){	
-			plateau[p.getX()][p.getY()]=p.getSymbole()+" ";
-		}else{
-			System.out.println(p.getNom()+" se cache dans une forêt !");
-		}
         if(plateau[p.getX()][p.getY()]=="(+)"){
             p.setPV(p.getPV()+10);
             bonus--;
             System.out.println(p.getNom()+" récupère un bonus et regagne 10 PV !");
         }
+		if(plateau[p.getX()][p.getY()]==" # "){	
+			System.out.println(p.getNom()+" se cache dans une forêt !");
+		}else{
+            plateau[p.getX()][p.getY()]=p.getSymbole()+" ";
+		}
+        
         return bonus;
     }
     
