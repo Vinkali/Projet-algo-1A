@@ -42,11 +42,6 @@ public class Jeu{
         creationForet(plateau, j1, j2);
         nbBonus = creationBonus(plateau, j1, j2, nbBonus);
         
-        affichePlateau(plateau);
-        
-        afficheVie(j1);
-        afficheVie(j2);
-        
         if(j1.getNom()==j2.getNom()){
             System.out.println("Quelle est cette sorcellerie ? "+j1.getNom()+" affronte son double !");
             System.out.println();
@@ -283,6 +278,13 @@ public class Jeu{
     }
     
     public static int deroulement(Personnage joueur, Personnage victime, String[][] plateau, int bonus){
+        
+        affichePlateau(plateau);
+        
+        afficheVie(joueur);
+        afficheVie(victime);
+        
+        
         System.out.println(joueur.getJoueur()+", c'est ton tour!");
         
         if(joueur.getCooldown()>0){
