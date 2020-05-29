@@ -307,6 +307,9 @@ public class Jeu{
 	
         if(A.getNom()=="attaque nulle"){
             System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
+        }if (joueur.getNom()== "Zhivago" && A== joueur.getAttaque(3)){
+			System.out.println(joueur.getNom()+ " se soigne de "+ A.getDegats()+ " PV.");
+			joueur.soin(A.getDegats());
         }else{
             System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
             victime.degat(A.getDegats());
