@@ -4,7 +4,6 @@
 
 
 /* 
- * 
  * demander au prof :
  * si il faut écrire les @see get et set dans la javadoc
  * si on peut éviter le crash quand l'utilisateur tape autre chose que ce que le scanner cherche (comme une lettre au lieu d'un int)
@@ -25,7 +24,6 @@ public class Jeu{
         System.out.println();
         System.out.println("Et toi, ô brillant tacticien ?");
         Personnage j2 = new Personnage(sc.nextLine());
-        int nbBonus = 0;
         
         System.out.println(regles());
         System.out.println();
@@ -35,12 +33,11 @@ public class Jeu{
         j1 = choixPerso(j1);
         j2 = choixPerso(j2);
         
-        deterAleaPremier(j1,j2);
+        deterAleaPremier(j1, j2);
         
-        String [][] plateau = creationPlateau();
-        placementJoueurAlea(plateau, j1, j2); //Place les joueurs de maniere aléatoire sur le plateau
-        creationForet(plateau, j1, j2);
-        nbBonus = creationBonus(plateau, j1, j2, nbBonus);
+        placementJoueurAlea(j1, j2); //Place les joueurs de maniere aléatoire sur le plateau
+        
+        Plateau plateau = new Plateau(j1, j2);
         
         if(j1.getNom()==j2.getNom()){
             System.out.println("Quelle est cette sorcellerie ? "+j1.getNom()+" affronte son double !");
@@ -50,11 +47,11 @@ public class Jeu{
 	
         while(finPartie(j1,j2)==false){
             if(j1.getJoueurActif()){
-                nbBonus = deroulement(j1,j2, plateau, nbBonus);
+                deroulement(j1,j2, plateau);
                 j1.setJoueurActif(false);
                 j2.setJoueurActif(true);
             }else{
-                nbBonus = deroulement(j2, j1, plateau, nbBonus);
+                deroulement(j2, j1, plateau);
                 j1.setJoueurActif(true);
                 j2.setJoueurActif(false);
             }
@@ -132,49 +129,16 @@ public class Jeu{
         System.out.println();
     }
     
-    public static String [][] creationPlateau(){
-        String [][] p= new String[19][19];
-        for(int i=0; i<p.length; i++){
-            for (int j=0; j<p[0].length; j++){
-                
-                if((i==0 || i==18) && j>1 && j<11){
-                    p[i][j]= " " + String.valueOf(j-1) +" "; //on affiche le numéro des lignes et des colonnes
-                }else if((i==0 || i==18) && j>10 && j<17){
-                    p[i][j]= " " + String.valueOf(j-1);
-                }else if((j==0 || j==18) && i>1 && i<11){
-                    p[i][j]= " " + String.valueOf(i-1) +" ";
-                }else if((j==0 || j==18) && i>10 && i<17){
-                    p[i][j]= " " + String.valueOf(i-1);
-                }else if((j==0 || j==18) && (i==0 || i==18)){
-                    p[i][j]= " X ";
-                    
-                }else if((i==1)||(i==17)){
-                    p[i][j]="---"; //On délimite le plateau pour qu'il soit bien visible par les joueurs
-                }else if((j==1)){
-                    p[i][j]="|  ";
-                }else if((j==17)){
-                    p[i][j]="  |";
-                }else{
-                    p[i][j]=" . "; //L'intérieur du plateau est rempli de points pour bien distinguer les différentes positions, et les distances
-                }
-            System.out.println();
-            }
-        }
-    return p;
-    }
-    
     /** Cette méthode place les joueurs de manière aléatoire au début du jeu
      * @param le plateau de jeu "vide", les joueurs J1 et J2  
      */
-    public static void placementJoueurAlea(String[][] plateau, Personnage j1, Personnage j2){
+    public static void placementJoueurAlea(Personnage j1, Personnage j2){
         while(distanceSecurite(j1, j2)==false){
-            j1.setX((int)(Math.random()*14+2));
-            j1.setY((int)(Math.random()*14+2));
-            j2.setX((int)(Math.random()*14+2));
-            j2.setY((int)(Math.random()*14+2));
+            j1.setX((int)(Math.random()*15+2));
+            j1.setY((int)(Math.random()*15+2));
+            j2.setX((int)(Math.random()*15+2));
+            j2.setY((int)(Math.random()*15+2));
         }
-		plateau[j1.getX()][j1.getY()] = j1.getSymbole()+" ";
-		plateau[j2.getX()][j2.getY()] = j2.getSymbole()+" ";
     }
     
     /** Cette méthode vérfie si les deux joueurs ne sont pas 
@@ -195,75 +159,9 @@ public class Jeu{
         return b;
     }
     
-    /** Cette méthode crée 3 forêts
-     * placées aléatoirement sur le plateau
-     * @param p le plateau, les joueurs j1 et j2
-     */
-    public static void creationForet(String[][] p, Personnage j1, Personnage j2){
-        int foret=0;
-        while(foret < 3){
-            int a = (int) (Math.random()*12+3);
-            int b = (int) (Math.random()*12+3);
-            boolean touchePerso= false;
-            for(int u= a-1; u<=a+1; u++){
-				for(int v=b-1; v<=b+1; v++){
-					if(((u==j1.getX() && v==j1.getY()) || (v==j2.getY() && u==j2.getX())) || u<2 || u>17 || v<2 || v>17){
-						touchePerso=true;
-					}
-				}
-			}
-            if(touchePerso==false){
-                for(int u= a-1; u<=a+1; u++){
-					for(int v=b-1; v<=b+1; v++){ 
-						p[u][v] = " # ";
-					}
-				}
-				foret ++;
-            }
-        }
-    }
+     
     
-    /**Cette méthode place sur le plateau 
-     * des bonus qui rendent de la vie aux joueurs
-     * @param p le plateau
-     * @param j1 le joueur 1
-     * @param j2 le joueur 2
-     */
-    public static int creationBonus(String[][] p, Personnage j1, Personnage j2, int bonus){
-        while(bonus < 3){
-            int a = (int) (Math.random()*12+3);
-            int b = (int) (Math.random()*12+3);
-            boolean caseOccupee = false;
-            for(int u= a-1; u<=a+1; u++){
-				for(int v=b-1; v<=b+1; v++){
-					if(((u==j1.getX() && v==j1.getY()) || (v==j2.getY() && u==j2.getX())) || u<2 || u>17 || v<2 || v>17){
-						caseOccupee=true;
-					}
-				}
-			}
-            if(p[a][b] == " # " || p[a][b] == "(+)"){
-                caseOccupee=true;
-            }
-            
-            if(caseOccupee==false){
-                p[a][b]="(+)";
-				bonus ++;
-            }
-        }
-        return bonus;
-    } 
     
-    /** Cette méthode affiche l'état actuel du plateau de jeu
-     * @param p le plateau à afficher
-     */
-    public static void affichePlateau(String[][] p){
-        for(int i=0; i<p.length; i++){
-            for(int j=0; j<p[0].length; j++){
-                System.out.print(p[i][j]);
-            }
-            System.out.println();
-        }
-    }
     
     /** Cette méthode affiche le nombre de points de vie restants d'un personnage
      * @param p le personnage dont on veut afficher les pV
@@ -277,9 +175,9 @@ public class Jeu{
         System.out.println();
     }
     
-    public static int deroulement(Personnage joueur, Personnage victime, String[][] plateau, int bonus){
+    public static void deroulement(Personnage joueur, Personnage victime, Plateau plateau){
         
-        affichePlateau(plateau);
+        plateau.affichage(joueur,victime);
         
         afficheVie(joueur);
         afficheVie(victime);
@@ -291,8 +189,7 @@ public class Jeu{
             joueur.setCooldown(joueur.getCooldown()-1);
         }
         
-        bonus = deplacement(joueur, victime, plateau, bonus);
-        affichePlateau(plateau);
+        plateau.deplacement(joueur, victime);
         afficheVie(joueur);
         afficheVie(victime);
 		
@@ -304,7 +201,8 @@ public class Jeu{
             System.out.println();
             A = choixAttaque(joueur);
         }
-	
+        
+        System.out.println();
         if(A.getNom()=="attaque nulle"){
             System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
         }else{
@@ -315,68 +213,11 @@ public class Jeu{
         System.out.println();
         afficheVie(victime);
         afficheVie(joueur);
-        bonus = creationBonus(plateau, joueur, victime, bonus);
-        return bonus;
+        plateau.creationBonus(joueur, victime);
+        pressEnter();
+        System.out.println();
+        System.out.println();
 	}
-	
-    /** cette méthode déplace un personnage
-     * vers des coordonnées précises
-     * @param p le joueur qui se déplace
-     * @param plateau le plateau de jeu
-     */
-    public static int deplacement(Personnage p, Personnage autre, String[][] plateau, int bonus){
-        Scanner sc = new Scanner(System.in);
-        boolean deplValide = false;
-        if(plateau[p.getX()][p.getY()] != " # "){
-			plateau[p.getX()][p.getY()] = " . ";
-		}
-        int i=0;
-        int j=0;
-        
-        while(deplValide==false){
-            System.out.println("sur quelle colonne veux-tu déplacer ton héros ?");
-            j = sc.nextInt()+1;
-            System.out.println("sur quelle ligne veux-tu déplacer ton héros ?");
-            i = sc.nextInt()+1;
-            if((1<i && i<17) && (1<j && j<17) && (i!=autre.getX() || j!=autre.getY())){
-                
-                if(Math.abs(i-p.getX())==Math.abs(j-p.getY()) && Math.abs(i-p.getX())<=p.getVitesse()){
-                    deplValide=true;
-                    p.setX(i);
-                    p.setY(j);
-                }else if(Math.abs(i-p.getX())==0 && Math.abs(j-p.getY())<=p.getVitesse()){
-                    deplValide=true;
-                    p.setY(j);
-                }else if(Math.abs(j-p.getY())==0 && Math.abs(i-p.getX())<=p.getVitesse()){
-                    deplValide=true;
-                    p.setX(i);
-                }else if(Math.abs(j-p.getY())<Math.abs(i-p.getX()) && (Math.abs(j-p.getY())+(Math.abs(i-p.getX())- Math.abs(j-p.getY())))<=p.getVitesse()){
-                    deplValide=true;
-                    p.setX(i);
-                    p.setY(j);
-                }else if(Math.abs(i-p.getX())<Math.abs(j-p.getY()) && (Math.abs(i-p.getX())+(Math.abs(j-p.getY())- Math.abs(i-p.getX())))<=p.getVitesse()){
-                    deplValide=true;
-                    p.setX(i);
-                    p.setY(j);
-                }else{
-                    System.out.println("Ton héros n'est pas assez rapide, il ne peut se déplacer que de "+p.getVitesse()+" cases");
-                }
-            }else{
-                System.out.println("Une de ces coordonnées dépasse du plateau ou ton adversaire occupe déjà cette case");
-            }
-        }
-		if(plateau[p.getX()][p.getY()]!=" # "){	
-			plateau[p.getX()][p.getY()]=p.getSymbole()+" ";
-		}else{
-			System.out.println(p.getNom()+" se cache dans une forêt !");
-		}
-        if(plateau[p.getX()][p.getY()]=="(+)"){
-            p.setPV(p.getPV()+10);
-            bonus--;
-            System.out.println(p.getNom()+" récupère un bonus et regagne 10 PV !");
-        }
-        return bonus;
-    }
     
 	public static Attaque choixAttaque(Personnage joueur){
 		Scanner sc = new Scanner(System.in);
@@ -417,6 +258,12 @@ public class Jeu{
             }
         }
         return b;
+    }
+    
+    public static void pressEnter(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Appuie sur entrée pour finir ton tour");
+        sc.nextLine();
     }
     
     public static boolean finPartie(Personnage j1, Personnage j2){
