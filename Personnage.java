@@ -174,11 +174,15 @@ public class Personnage{
     public String getSymbole(){
         return this.symbole;
     }
-    
+    public void soin (int degat){
+		this.pV= this.pV + degat;
+	}
+	
     public void setSymbole(String s){
         this.symbole = s;
     }
 }
+	
 
 
 
