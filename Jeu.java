@@ -278,7 +278,7 @@ public class Jeu{
     }
     
     public static int deroulement(Personnage joueur, Personnage victime, String[][] plateau, int bonus){
-        
+        Scanner sc = new Scanner (System.in);
         affichePlateau(plateau);
         
         afficheVie(joueur);
@@ -291,34 +291,85 @@ public class Jeu{
             joueur.setCooldown(joueur.getCooldown()-1);
         }
         
-        bonus = deplacement(joueur, victime, plateau, bonus);
-        affichePlateau(plateau);
-        afficheVie(joueur);
-        afficheVie(victime);
-		
-        Attaque A = choixAttaque(joueur);
-        System.out.println();
-        while((testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
-            System.out.println();
-            System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
-            System.out.println();
-            A = choixAttaque(joueur);
-        }
+        System.out.println("Veux-tu commencer par te déplacer (entre 1) ou attaquer (entre 2) ?");
+        int i = sc.nextInt();
+        while(i!=1 && i!=2){
+		System.out.println("Non, tu dois entrer 1 ou 2!");
+		i = sc.nextInt();
+	}
+	joueur.setmouvRestant(joueur.getVitesse());
+        if(i==1){
+		bonus = deplacement(joueur, victime, plateau, bonus);
+		affichePlateau(plateau);
+		afficheVie(joueur);
+		afficheVie(victime);
 	
-        if(A.getNom()=="attaque nulle"){
-            System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
-        }if (joueur.getNom()== "Zhivago" && A== joueur.getAttaque(3)){
+		Attaque A = choixAttaque(joueur);
+		System.out.println();
+		while((testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
+			System.out.println();
+			System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
+			System.out.println();
+			A = choixAttaque(joueur);
+		}
+
+		if(A.getNom()=="attaque nulle"){
+			System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
+		}else if (joueur.getNom()== "Zhivago" && A== joueur.getAttaque(3)){
 			System.out.println(joueur.getNom()+ " se soigne de "+ A.getDegats()+ " PV.");
 			joueur.soin(A.getDegats());
+		}else{
+			System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
+			victime.degat(A.getDegats());
+			A.baisseDegats();
+		}
+		System.out.println();
+		afficheVie(victime);
+		afficheVie(joueur);
+		bonus = creationBonus(plateau, joueur, victime, bonus);
+		
+		if(joueur.getmouvRestant()>0){
+			affichePlateau(plateau);
+			System.out.println("Tu as encore la possibilité de te déplacer de "+joueur.getmouvRestant()+" cases.");
+			bonus = deplacement(joueur, victime, plateau, bonus);
+			affichePlateau(plateau);
+			afficheVie(joueur);
+			afficheVie(victime);
+			bonus = creationBonus(plateau, joueur, victime, bonus);
+		}
         }else{
-            System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
-            victime.degat(A.getDegats());
-	    A.baisseDegats();
-        }
-        System.out.println();
-        afficheVie(victime);
-        afficheVie(joueur);
-        bonus = creationBonus(plateau, joueur, victime, bonus);
+		
+		Attaque A = choixAttaque(joueur);
+		System.out.println();
+		while((testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
+			System.out.println();
+			System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
+			System.out.println();
+			A = choixAttaque(joueur);
+		}
+
+		if(A.getNom()=="attaque nulle"){
+			System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
+		}else if (joueur.getNom()== "Zhivago" && A== joueur.getAttaque(3)){
+			System.out.println(joueur.getNom()+ " se soigne de "+ A.getDegats()+ " PV.");
+			joueur.soin(A.getDegats());
+		}else{
+			System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
+			victime.degat(A.getDegats());
+			A.baisseDegats();
+		}
+		System.out.println();
+		affichePlateau(plateau);
+		afficheVie(victime);
+		afficheVie(joueur);
+		
+		bonus = deplacement(joueur, victime, plateau, bonus);
+		affichePlateau(plateau);
+		afficheVie(joueur);
+		afficheVie(victime);
+	
+		bonus = creationBonus(plateau, joueur, victime, bonus);		
+		}
         return bonus;
 	}
 	
@@ -347,20 +398,25 @@ public class Jeu{
                     deplValide=true;
                     p.setX(i);
                     p.setY(j);
+                    p.setmouvRestant(p.getVitesse()-Math.abs(i-p.getX()));
                 }else if(Math.abs(i-p.getX())==0 && Math.abs(j-p.getY())<=p.getVitesse()){
                     deplValide=true;
                     p.setY(j);
+                    p.setmouvRestant(p.getVitesse()-Math.abs(j-p.getY()));
                 }else if(Math.abs(j-p.getY())==0 && Math.abs(i-p.getX())<=p.getVitesse()){
                     deplValide=true;
                     p.setX(i);
-                }else if(Math.abs(j-p.getY())<Math.abs(i-p.getX()) && (Math.abs(j-p.getY())+(Math.abs(i-p.getX())- Math.abs(j-p.getY())))<=p.getVitesse()){
+                    p.setmouvRestant(p.getVitesse()-Math.abs(i-p.getX()));
+                }else if(Math.abs(j-p.getY())<Math.abs(i-p.getX()) && Math.abs(i-p.getX()) <=p.getVitesse()){
                     deplValide=true;
                     p.setX(i);
                     p.setY(j);
-                }else if(Math.abs(i-p.getX())<Math.abs(j-p.getY()) && (Math.abs(i-p.getX())+(Math.abs(j-p.getY())- Math.abs(i-p.getX())))<=p.getVitesse()){
+                    p.setmouvRestant(p.getVitesse()-(Math.abs(i-p.getX())+Math.abs(i-p.getY())));
+                }else if(Math.abs(i-p.getX())<Math.abs(j-p.getY()) && Math.abs(j-p.getY())<=p.getVitesse()){
                     deplValide=true;
                     p.setX(i);
                     p.setY(j);
+                    p.setmouvRestant(p.getVitesse()-(Math.abs(i-p.getX())+Math.abs(i-p.getY())));
                 }else{
                     System.out.println("Ton héros n'est pas assez rapide, il ne peut se déplacer que de "+p.getVitesse()+" cases");
                 }
