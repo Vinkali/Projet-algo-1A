@@ -7,6 +7,7 @@ public class Personnage{
     private boolean joueurActif;
     private int pV;
     private int vitesse;
+    private int mouvRestant;
     private Attaque attaque1;
     private Attaque attaque2;
     private Attaque attaque3;
@@ -180,6 +181,14 @@ public class Personnage{
 	
     public void setSymbole(String s){
         this.symbole = s;
+    }
+	
+    public int getmouvRestant(){
+        return this.mouvRestant;
+    }
+    
+    public void setmouvRestant(int i){
+        this.mouvRestant = i;
     }
 }
 	
