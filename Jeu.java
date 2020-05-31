@@ -1,73 +1,62 @@
-
-
-
-
-
-/* 
- * demander au prof :
- * si il faut écrire les @see get et set dans la javadoc
- * si on peut éviter le crash quand l'utilisateur tape autre chose que ce que le scanner cherche (comme une lettre au lieu d'un int)
- */
-
-
-
-
 import java.util.Scanner;
 public class Jeu{
+    Personnage j1;
+    Personnage j2;
+    Plateau plateau;
     
-    public static void main(String [] args){
+    public Jeu(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Bienvenue dans l'arène !");
         System.out.println();
         System.out.println("Quel est ton nom, ô valeureux stratège ?");
-        Personnage j1 = new Personnage(sc.nextLine());
+        this.j1 = new Personnage(sc.nextLine());
         System.out.println();
         System.out.println("Et toi, ô brillant tacticien ?");
-        Personnage j2 = new Personnage(sc.nextLine());
+        this.j2 = new Personnage(sc.nextLine());
         
-        System.out.println(regles());
+        this.regles();
         System.out.println();
-        System.out.println(descriptionPersos());
+        this.descriptionPersos();
         System.out.println();
         
-        j1 = choixPerso(j1);
-        j2 = choixPerso(j2);
+        this.j1 = this.choixPerso(this.j1); // a changer
+        this.j2 = this.choixPerso(this.j2); // a changer
         
-        deterAleaPremier(j1, j2);
+        this.deterAleaPremier();
         
-        placementJoueurAlea(j1, j2); //Place les joueurs de maniere aléatoire sur le plateau
+        this.placementJoueurAlea(); //Place les joueurs de maniere aléatoire sur le plateau
         
-        Plateau plateau = new Plateau(j1, j2);
+        this.plateau = new Plateau(this.j1, this.j2);
         
-        if(j1.getNom()==j2.getNom()){
-            System.out.println("Quelle est cette sorcellerie ? "+j1.getNom()+" affronte son double !");
+        if(this.j1.getNom()==this.j2.getNom()){
+            System.out.println("Quelle est cette sorcellerie ? "+this.j1.getNom()+" affronte son double !");
             System.out.println();
         }
         
 	
-        while(finPartie(j1,j2)==false){
-            if(j1.getJoueurActif()){
-                deroulement(j1,j2, plateau);
-                j1.setJoueurActif(false);
-                j2.setJoueurActif(true);
+        while(this.finPartie()==false){
+            if(this.j1.getJoueurActif()){
+                this.deroulement(this.j1,this.j2); // a changer
+                this.j1.setJoueurActif(false);
+                this.j2.setJoueurActif(true);
             }else{
-                deroulement(j2, j1, plateau);
-                j1.setJoueurActif(true);
-                j2.setJoueurActif(false);
+                this.deroulement(this.j2, this.j1); // a changer
+                this.j1.setJoueurActif(true);
+                this.j2.setJoueurActif(false);
             }
         }
     }
     
     /** Cette méthode stocke le texte des règles
      */
-    public static String regles(){
-        return "à chaque tour les joueurs se déplacent puis attaquent leur adversaire si ils sont assez près";
+    private void regles(){
+        System.out.println("à chaque tour les joueurs se déplacent puis attaquent leur adversaire si ils sont assez près");
     }
     
     /** Cette méthode stocke le texte de description des personnages
      */
-    public static String descriptionPersos(){
-        return "1: Hector | 2: Merlin | 3: Inspecteur gadget | 4: Gimli | 5: Ichigo | 6: Zhivago";
+    private void descriptionPersos(){
+        System.out.println("1: Hector | 2: Merlin | 3: Inspecteur gadget | 4: Gimli | 5: Ichigo | 6: Zhivago");
     }
     
     /** Cette méthode initialise les caractéristique d'un personnage à partir d'une liste de modèles prédéfinis
@@ -75,7 +64,7 @@ public class Jeu{
      * @param j le personnage du joueur, qui n'a pas encore de caractéristiques
      * @return j le personnage du joueur initialisé d'après un modèle
      */
-    public static Personnage choixPerso(Personnage j){
+    public Personnage choixPerso(Personnage j){
         Scanner sc = new Scanner(System.in);
         boolean confirmation = false;
         
@@ -86,9 +75,7 @@ public class Jeu{
             j = new Personnage(j.getJoueur(),i);
             
             if(j.getNom() != null){
-                String newLine= System.getProperty("line.separator");
-                System.out.println("Tu veux incarner "+j.getNom()+"? Ce combatant a "+j.getPV()+"PV et dispose de "+j.getVitesse()+" points de vitesse."
-                +newLine+"Entre 1 si oui et 2 si non");
+                System.out.println("Tu veux incarner "+j.getNom()+"? Ce combatant a "+j.getPV()+"PV et dispose de "+j.getVitesse()+" points de vitesse. \nEntre 1 si oui et 2 si non");
                 if(sc.nextInt()==1){
                     confirmation=true;
                 }else{
@@ -107,51 +94,49 @@ public class Jeu{
      * @param p1 le personnage du joueur 1
      * @param p2 le personnage du joueur 2
      */
-    public static void deterAleaPremier(Personnage p1,Personnage p2){
-        if(p1.getJoueurActif() == p2.getJoueurActif()){
+    public void deterAleaPremier(){
+        if(this.j1.getJoueurActif() == this.j2.getJoueurActif()){
             double i = Math.random();
             if(i<0.5){
-                p1.setJoueurActif(true);
-                p2.setJoueurActif(false);
-                p1.setSymbole("J1");
-                p2.setSymbole("J2");
-                System.out.println(p1.getNom()+" prend de vitesse son adversaire !");
+                this.j1.setJoueurActif(true);
+                this.j2.setJoueurActif(false);
+                this.j1.setSymbole("J1");
+                this.j2.setSymbole("J2");
+                System.out.println(this.j1.getNom()+" prend de vitesse son adversaire !");
             }else{
-                p2.setJoueurActif(true);
-                p1.setJoueurActif(false);
-                p2.setSymbole("J1");
-                p1.setSymbole("J2");
-                System.out.println(p2.getNom()+" prend de vitesse son adversaire !");
+                this.j2.setJoueurActif(true);
+                this.j1.setJoueurActif(false);
+                this.j2.setSymbole("J1");
+                this.j1.setSymbole("J2");
+                System.out.println(this.j2.getNom()+" prend de vitesse son adversaire !");
             }
         }else{
-            System.out.println("L'Être Suprême prend de vitesse le misérable cafard qui ose se tenir sur son chemin !");
+            System.out.println("L'Être Suprême prend de vitesse le misérable cafard qui ose se tenir sur son chemin !"); //Ce cas n'a lieu que si un des joueurs a trouvé l'easter egg
         }
         System.out.println();
     }
     
     /** Cette méthode place les joueurs de manière aléatoire au début du jeu
-     * @param le plateau de jeu "vide", les joueurs J1 et J2  
      */
-    public static void placementJoueurAlea(Personnage j1, Personnage j2){
-        while(distanceSecurite(j1, j2)==false){
-            j1.setX((int)(Math.random()*15+2));
-            j1.setY((int)(Math.random()*15+2));
-            j2.setX((int)(Math.random()*15+2));
-            j2.setY((int)(Math.random()*15+2));
+    public void placementJoueurAlea(){
+        while(this.distanceSecurite()==false){
+            this.j1.setX((int)(Math.random()*15+2));
+            this.j1.setY((int)(Math.random()*15+2));
+            this.j2.setX((int)(Math.random()*15+2));
+            this.j2.setY((int)(Math.random()*15+2));
         }
     }
     
     /** Cette méthode vérfie si les deux joueurs ne sont pas 
      * trop proches pour le début de partie 
      * et renvoie l'info sous forme de booléen
-     * @param les joueurs j1 et j2
      * @return b le booléen
      */
-    public static boolean distanceSecurite(Personnage j1, Personnage j2){
+    public boolean distanceSecurite(){
         boolean b = true;
-        for(int i = j1.getX() - 4; i<= j1.getX() + 4; i++){
-            for(int j = j1.getY() - 4; j<= j1.getY() + 4; j++){
-                if((i==j2.getX())&&(j==j2.getY())){
+        for(int i = this.j1.getX() - 4; i<= this.j1.getX() + 4; i++){
+            for(int j = this.j1.getY() - 4; j<= this.j1.getY() + 4; j++){
+                if((i==this.j2.getX())&&(j==this.j2.getY())){
                     b= false;
                 }
             }
@@ -159,28 +144,12 @@ public class Jeu{
         return b;
     }
     
-     
-    
-    
-    
-    /** Cette méthode affiche le nombre de points de vie restants d'un personnage
-     * @param p le personnage dont on veut afficher les pV
-     */
-    public static void afficheVie(Personnage p){
-        System.out.println("PV "+p.getJoueur()+" :");
-        for(int i=0; i<p.getPV(); i++){
-            System.out.print("*");
-        }
-        System.out.println();
-        System.out.println();
-    }
-    
-    public static void deroulement(Personnage joueur, Personnage victime, Plateau plateau){
+    public void deroulement(Personnage joueur, Personnage victime){
+        Scanner sc = new Scanner(System.in);
+        this.plateau.affichage(joueur,victime);
         
-        plateau.affichage(joueur,victime);
-        
-        afficheVie(joueur);
-        afficheVie(victime);
+        joueur.afficheVie();
+        victime.afficheVie();
         
         
         System.out.println(joueur.getJoueur()+", c'est ton tour!");
@@ -189,17 +158,17 @@ public class Jeu{
             joueur.setCooldown(joueur.getCooldown()-1);
         }
         
-        plateau.deplacement(joueur, victime);
-        afficheVie(joueur);
-        afficheVie(victime);
+        this.plateau.deplacement(joueur, victime);
+        joueur.afficheVie();
+        victime.afficheVie();
 		
-        Attaque A = choixAttaque(joueur);
+        Attaque A = this.choixAttaque(joueur); // a changer
         System.out.println();
-        while((testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
+        while((this.testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){ // a changer
             System.out.println();
             System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
             System.out.println();
-            A = choixAttaque(joueur);
+            A = this.choixAttaque(joueur);
         }
         
         System.out.println();
@@ -211,21 +180,25 @@ public class Jeu{
 	    A.baisseDegats();
         }
         System.out.println();
-        afficheVie(victime);
-        afficheVie(joueur);
-        plateau.creationBonus(joueur, victime);
-        pressEnter();
+        joueur.afficheVie();
+        victime.afficheVie();
+        this.plateau.creationBonus(joueur, victime);
+        this.pressEnter();
         System.out.println();
         System.out.println();
 	}
     
-	public static Attaque choixAttaque(Personnage joueur){
+	public Attaque choixAttaque(Personnage joueur){
 		Scanner sc = new Scanner(System.in);
-		Attaque nulle= new Attaque();
+ 		Attaque nulle= new Attaque();
 		
 		System.out.println("Voici les attaques de ton personnage:");
 		for(int i = 1; i<4; i++){
-			System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
+			if(i==3 && joueur.getNom() =="Zhivago"){
+                System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui n'inflige pas de dégats mais te rends "+joueur.getAttaque(i).getDegats()+" PV");
+            }else{
+                System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
+            }
 		}
 		System.out.print("Entre le numéro associé à l'attaque que tu veux utiliser: ");
 		int a = sc.nextInt();
@@ -238,6 +211,7 @@ public class Jeu{
             System.out.print("Cette attaque ne sera disponible que dans "+joueur.getCooldown()+" tours, entre à nouveau un nombre: ");
 			a= sc.nextInt();
         }
+        
 		if((a==1)||(a==2)){
 			return joueur.getAttaque(a);
 		}else if(a==3 && joueur.getCooldown()==0){
@@ -248,7 +222,7 @@ public class Jeu{
 		}
 	}
     
-    public static boolean testPortee(int portee, Personnage j, Personnage v){
+    public boolean testPortee(int portee, Personnage j, Personnage v){
         boolean b= false;
         for(int i = j.getX() - portee; i<= j.getX() + portee; i++){
             for(int u = j.getY() - portee; u<= j.getY() + portee; u++){
@@ -260,19 +234,19 @@ public class Jeu{
         return b;
     }
     
-    public static void pressEnter(){
+    public void pressEnter(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Appuie sur entrée pour finir ton tour");
         sc.nextLine();
     }
     
-    public static boolean finPartie(Personnage j1, Personnage j2){
-        if(j1.getPV()<=0){
-            System.out.println(j2.getNom() + " remporte ce combat !");
+    public boolean finPartie(){
+        if(this.j1.getPV()<=0){
+            System.out.println(this.j2.getNom() + " remporte ce combat !");
             System.out.println();
             return true;
-        }else if(j2.getPV()<=0){
-            System.out.println(j1.getNom() + " remporte ce combat !");
+        }else if(this.j2.getPV()<=0){
+            System.out.println(this.j1.getNom() + " remporte ce combat !");
             System.out.println();
             return true; 
         }else{

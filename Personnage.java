@@ -7,6 +7,7 @@ public class Personnage{
     private boolean joueurActif;
     private int pV;
     private int vitesse;
+    private int mouvRestant;
     private Attaque attaque1;
     private Attaque attaque2;
     private Attaque attaque3;
@@ -34,38 +35,38 @@ public class Personnage{
         this.joueur = joueur;
         this.cooldownAtk3 = 4;
         switch(i){
-		case 1: /* Ceci est simplement un exemple, a chaque i on associe un personnage défini*/
+		case 1:
 			this.nom = "Hector"; 
 			this.pV = 50;
-          		this.vitesse = 5;
+            this.vitesse = 5;
 			this.attaque1 = new Attaque("Tir arc", 10, 10);
 			this.attaque2 = new Attaque("Coup de poing", 1, 20);
-               		this.attaque3 = new Attaque("Uppercut", 1, 30);
+            this.attaque3 = new Attaque("Uppercut", 1, 30);
 			break;
 		case 2:
 			this.nom = "Merlin l'enchanteur"; 
 			this.pV = 50;
-               		this.vitesse = 3;
+            this.vitesse = 3;
 			this.attaque1 = new Attaque("Jet de potion", 10, 10);
 			this.attaque2 = new Attaque("Coup de baton", 2, 20);
-               		this.attaque3 = new Attaque("Boule de feu", 20, 20);
+            this.attaque3 = new Attaque("Boule de feu", 20, 20);
 			break;
-          	case 3:
+        case 3:
 			this.nom = "Inspecteur Gadget"; 
 			this.pV = 50;
-                	this.vitesse = 2;
+            this.vitesse = 2;
 			this.attaque1 = new Attaque("GOGO GADGET COUP DE POING AMERICAIN", 3, 25);
 			this.attaque2 = new Attaque("GOGO GADGET FLECHETTE", 11, 8);
 			this.attaque3 = new Attaque("GOGO GADGET MISSILE", 11, 20);
 			break;
-         	case 4:
-                	this.nom = "Gimli fils de Glóin";
-	                this.pV = 100;
-        	        this.vitesse = 1;
-                	this.attaque1 = new Attaque("Coup de hache", 1, 40);
-	                this.attaque2 = new Attaque("Lancer de hache", 2, 25);
-        	        this.attaque3 = new Attaque("Charge du nain", 3, 50);
-                	break;
+        case 4:
+            this.nom = "Gimli fils de Glóin";
+            this.pV = 100;
+            this.vitesse = 1;
+            this.attaque1 = new Attaque("Coup de hache", 1, 40);
+            this.attaque2 = new Attaque("Lancer de hache", 2, 25);
+            this.attaque3 = new Attaque("Charge du nain", 3, 50);
+            break;
 		case 5:
 			this.nom = "Ichigo";
 			this.pV= 50;
@@ -80,7 +81,7 @@ public class Personnage{
 			this.vitesse=10;
 			this.attaque1 = new Attaque("Tranchant",2,10);
 			this.attaque2 = new Attaque("Griffe acérée",2,20);
-			this.attaque3 = new Attaque("Régénération bestiale",2,30);
+			this.attaque3 = new Attaque("Régénération bestiale",2147483647,30);
 			break;
 		/*case ...*/
 		case 42:
@@ -88,20 +89,31 @@ public class Personnage{
 			this.nom = "L'Être Suprême";
 			this.joueurActif = true;
 			this.pV = 4242;
-	                this.vitesse = 42;
-	                this.cooldownAtk3=1;
+            this.vitesse = 42;
+            this.cooldownAtk3=1;
 			this.attaque1 = new Attaque("Pluie de salade nicoise", 42, 42);
 			this.attaque2 = new Attaque("Lancer de noix de coco", 4242, 424242);
 			this.attaque3 = new Attaque("Explosion de rollers nucléaires", 424242, 42424242);
-        	        System.out.println();
+            System.out.println();
 			System.out.println("    <(^_^)>   bravo tu es cheaté.e   <(^_^)>");
 			System.out.println();
 			break;
 		default:
-	        	System.out.println("erreur ! entre un numéro valide");
+            System.out.println("erreur ! entre un numéro valide");
         }
         this.x= 1;
         this.y=1;
+    }
+    
+    /** Cette méthode affiche le nombre de points de vie restants du personnage
+     */
+    public void afficheVie(){
+        System.out.println("PV "+this.getJoueur()+" :");
+        for(int i=0; i<this.getPV(); i++){
+            System.out.print("*");
+        }
+        System.out.println();
+        System.out.println();
     }
     
     public String getNom(){
@@ -171,12 +183,24 @@ public class Personnage{
         this.pV = this.pV - degat;
     }
     
+    public void soin (int degat){
+		this.pV= this.pV + degat;
+	}
+    
     public String getSymbole(){
         return this.symbole;
     }
     
     public void setSymbole(String s){
         this.symbole = s;
+    }
+    
+        public int getmouvRestant(){
+        return this.mouvRestant;
+    }
+
+    public void setmouvRestant(int i){
+        this.mouvRestant = i;
     }
 }
 
