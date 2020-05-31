@@ -160,20 +160,25 @@ public class Plateau{
                     deplValide=true;
                     p.setX(i);
                     p.setY(j);
+                    p.setMouvRestant(p.getMouvRestant()-Math.abs(i-p.getX()));
                 }else if(Math.abs(i-p.getX())==0 && Math.abs(j-p.getY())<=p.getVitesse()){ //déplacement en ligne droite suivant y
                     deplValide=true;
                     p.setY(j);
+                    p.setMouvRestant(p.getMouvRestant()-Math.abs(j-p.getY()));
                 }else if(Math.abs(j-p.getY())==0 && Math.abs(i-p.getX())<=p.getVitesse()){ //déplacement en ligne droite selon x
                     deplValide=true;
                     p.setX(i);
+                    p.setMouvRestant(p.getMouvRestant()-Math.abs(i-p.getX()));
                 }else if(Math.abs(j-p.getY())<Math.abs(i-p.getX()) && Math.abs(i-p.getX())<=p.getVitesse()){ //déplacement "hybride" qui va plus loin en x qu'en y
                     deplValide=true;
                     p.setX(i);
                     p.setY(j);
+                    p.setMouvRestant(p.getMouvRestant()-Math.abs(i-p.getX()));
                 }else if(Math.abs(i-p.getX())<Math.abs(j-p.getY()) && (Math.abs(j-p.getY())<=p.getVitesse())){ //déplacement "hybride" qui va plus loin en y qu'en x
                     deplValide=true;
                     p.setX(i);
                     p.setY(j);
+                    p.setMouvRestant(p.getMouvRestant()-Math.abs(j-p.getY()));
                 }else{
                     System.out.println("Ton héros n'est pas assez rapide, il ne peut se déplacer que de "+p.getVitesse()+" cases");
                 }

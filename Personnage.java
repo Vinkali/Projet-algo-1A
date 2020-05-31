@@ -195,11 +195,11 @@ public class Personnage{
         this.symbole = s;
     }
     
-        public int getmouvRestant(){
+        public int getMouvRestant(){
         return this.mouvRestant;
     }
 
-    public void setmouvRestant(int i){
+    public void setMouvRestant(int i){
         this.mouvRestant = i;
     }
 }
