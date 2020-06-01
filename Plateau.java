@@ -23,11 +23,11 @@ public class Plateau{
                 if((i==0 || i==18) && j>1 && j<11){
                     this.defaut[i][j]= " " + String.valueOf(j-1) +" "; //on note le numéro des lignes et des colonnes
                 }else if((i==0 || i==18) && j>10 && j<17){
-                    this.defaut[i][j]= " " + String.valueOf(j-1);
+                    this.defaut[i][j]= String.valueOf(j-1) +" ";
                 }else if((j==0 || j==18) && i>1 && i<11){
                     this.defaut[i][j]= " " + String.valueOf(i-1) +" ";
                 }else if((j==0 || j==18) && i>10 && i<17){
-                    this.defaut[i][j]= " " + String.valueOf(i-1);
+                    this.defaut[i][j]= String.valueOf(i-1) +" ";
                 }else if((j==0 || j==18) && (i==0 || i==18)){
                     this.defaut[i][j]= " X ";
                     
@@ -196,7 +196,7 @@ public class Plateau{
         this.affichage(p, autre);
         System.out.println();
 		if(this.foret[p.getX()][p.getY()]==true){	
-			System.out.println(p.getNom()+" se cache dans une forêt !");
+			System.out.println(p.getNom()+" s'enfonce dans une étrange forêt ...");
             System.out.println();
 		}
         if(this.bonus[p.getX()][p.getY()]==true){
