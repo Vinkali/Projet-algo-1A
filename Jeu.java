@@ -170,31 +170,7 @@ public class Jeu{
             joueur.afficheVie();
             victime.afficheVie();
 	
-            Attaque A = this.choixAttaque(joueur); // a changer
-            System.out.println();
-            
-            if(this.plateau.getForet()[joueur.getX()][joueur.getY()] != this.plateau.getForet()[victime.getX()][victime.getY()]){
-                System.out.println(joueur.getNom() + " tente d'attaquer son adversaire ... mais celui-ci semble s'être volatilisé !");
-            }else{
-                
-                while((this.testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){ // a changer
-                    System.out.println();
-                    System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
-                    System.out.println();
-                    A = this.choixAttaque(joueur);
-                }
-                if(A.getNom()=="attaque nulle"){
-                    System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
-                }else if (joueur.getNom()== "Zhivago" && A== joueur.getAttaque(3)){
-                    System.out.println(joueur.getNom()+ " se soigne de "+ A.getDegats()+ " PV.");
-                    joueur.soin(A.getDegats());
-                    A.baisseDegats();
-                }else{
-                    System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
-                    victime.degat(A.getDegats());
-                    A.baisseDegats();
-                }
-            }
+            this.phaseAttaque(joueur, victime);
             System.out.println();
             joueur.afficheVie();
             victime.afficheVie();
@@ -208,32 +184,8 @@ public class Jeu{
             }
         
         }else{
-            Attaque A = this.choixAttaque(joueur);
-            System.out.println();
+            this.phaseAttaque(joueur, victime);
             
-            if(this.plateau.getForet()[joueur.getX()][joueur.getY()] != this.plateau.getForet()[victime.getX()][victime.getY()]){
-                System.out.println(joueur.getNom() + " tente d'attaquer son adversaire ... mais celui-ci semble s'être volatilisé !");
-            }else{
-                
-                while((this.testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
-                    System.out.println();
-                    System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
-                    System.out.println();
-                    A = this.choixAttaque(joueur);
-                }
-            
-                if(A.getNom()=="attaque nulle"){
-                    System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
-                }else if (joueur.getNom()== "Zhivago" && A== joueur.getAttaque(3)){
-                    System.out.println(joueur.getNom()+ " se soigne de "+ A.getDegats()+ " PV.");
-                    joueur.soin(A.getDegats());
-                    A.baisseDegats();
-                }else{
-                    System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
-                    victime.degat(A.getDegats());
-                    A.baisseDegats();
-                }
-            }
             System.out.println();
             this.plateau.affichage(joueur, victime);
             joueur.afficheVie();
@@ -248,6 +200,35 @@ public class Jeu{
         System.out.println();
         System.out.println();
 	}
+    
+    public void phaseAttaque(Personnage joueur, Personnage victime){
+        Attaque A = this.choixAttaque(joueur);
+        System.out.println();
+        
+        if(this.plateau.getForet()[joueur.getX()][joueur.getY()] != this.plateau.getForet()[victime.getX()][victime.getY()]){
+            System.out.println(joueur.getNom() + " tente d'attaquer son adversaire ... mais celui-ci semble s'être volatilisé !");
+        }else{
+            
+            while((this.testPortee(A.getPortee(), joueur, victime)==false)&&(A.getNom()!="attaque nulle")){
+                System.out.println();
+                System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
+                System.out.println();
+                A = this.choixAttaque(joueur);
+            }
+        
+            if(A.getNom()=="attaque nulle"){
+                System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
+            }else if (joueur.getNom()== "Zhivago" && A== joueur.getAttaque(3)){
+                System.out.println(joueur.getNom()+ " se soigne de "+ A.getDegats()+ " PV.");
+                joueur.soin(A.getDegats());
+                A.baisseDegats();
+            }else{
+                System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
+                victime.degat(A.getDegats());
+                A.baisseDegats();
+            }
+        }
+    }
     
 	public Attaque choixAttaque(Personnage joueur){
 		Scanner sc = new Scanner(System.in);
