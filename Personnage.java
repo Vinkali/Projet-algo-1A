@@ -1,5 +1,3 @@
-
-
 public class Personnage{
     private String joueur;
     private String nom;
