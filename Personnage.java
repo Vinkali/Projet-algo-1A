@@ -22,7 +22,7 @@ public class Personnage{
 
     public Personnage(String joueur, int i){
         this.joueur = joueur;
-        this.cooldownAtk3 = 4;
+        this.cooldownAtk3 = 4; // ceci permet de régler le temps de recharge de la 3eme attaque des héros
         this.x = 1;
         this.y = 1;
         
