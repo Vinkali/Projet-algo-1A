@@ -56,7 +56,7 @@ public class Jeu{
     /** Cette méthode stocke le texte de description des personnages
      */
     private void descriptionPersos(){
-        System.out.println("1: Hector | 2: Merlin | 3: Inspecteur gadget | 4: Gimli | 5: Ichigo | 6: Zhivago");
+        System.out.println("1: Hector | 2: Merlin | 3: Inspecteur gadget | 4: Gimli | 5: Ichigo | 6: Zhivago | 7: Erik");
     }
     
     /** Cette méthode initialise les caractéristique d'un personnage à partir d'une liste de modèles prédéfinis
@@ -218,13 +218,18 @@ public class Jeu{
         
             if(A.getNom()=="attaque nulle"){
                 System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
-            }else if (joueur.getNom()== "Zhivago" && A== joueur.getAttaque(3)){
-                System.out.println(joueur.getNom()+ " se soigne de "+ A.getDegats()+ " PV.");
-                joueur.soin(A.getDegats());
+            }else if(A.getNom() == "Régénération bestiale"){
+                System.out.println(joueur.getNom()+ " se soigne de "+ A.getDegats()+ " PV !");
+                joueur.setPV(joueur.getPV() + A.getDegats());
+                A.baisseDegats();
+            }else if(A.getNom()== "Aspi-PV"){
+                System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom()+" et se soigne d'autant de PV !");
+                joueur.setPV(joueur.getPV() + A.getDegats());
+                victime.setPV(victime.getPV() - A.getDegats());
                 A.baisseDegats();
             }else{
-                System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom());
-                victime.degat(A.getDegats());
+                System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+victime.getNom()+" !");
+                victime.setPV(victime.getPV() - A.getDegats());
                 A.baisseDegats();
             }
         }
@@ -238,7 +243,10 @@ public class Jeu{
 		for(int i = 1; i<4; i++){
 			if(i==3 && joueur.getNom() =="Zhivago"){
                 System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui n'inflige pas de dégats mais te rends "+joueur.getAttaque(i).getDegats()+" PV");
-            }else{
+            }else if(i==2 && joueur.getNom() =="Erik"){
+                System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts, te rend autant de PV et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
+            }
+            else{
                 System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
             }
 		}
