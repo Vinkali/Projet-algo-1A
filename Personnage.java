@@ -13,18 +13,6 @@ public class Personnage{
     private int x;
     private int y;
     
-    
-    public Personnage(){ //Constructeur par défaut, on pourra le supprimer quand on aura défini les persos
-        this.nom = "personne";
-        this.pV = 1;
-        this.vitesse = 1;
-        this.attaque1 = new Attaque("rien", 1, 1);
-        this.attaque2 = new Attaque("rien", 1, 1);
-        this.attaque3 = new Attaque("rien", 1, 1);
-        this.x= 1;
-        this.y=1;
-    }
-    
     public Personnage(String joueur){
         this.joueur = joueur;
     }
@@ -32,12 +20,15 @@ public class Personnage{
     public Personnage(String joueur, int i){
         this.joueur = joueur;
         this.cooldownAtk3 = 4;
+        this.x = 1;
+        this.y = 1;
+        
         switch(i){
 		case 1:
 			this.nom = "Hector"; 
 			this.pV = 50;
             this.vitesse = 5;
-			this.attaque1 = new Attaque("Tir arc", 10, 10);
+			this.attaque1 = new Attaque("Tir à l'arc", 10, 10);
 			this.attaque2 = new Attaque("Coup de poing", 1, 20);
             this.attaque3 = new Attaque("Uppercut", 1, 30);
 			break;
@@ -81,7 +72,14 @@ public class Personnage{
 			this.attaque2 = new Attaque("Griffe acérée",2,20);
 			this.attaque3 = new Attaque("Régénération bestiale",2147483647,30);
 			break;
-		/*case ...*/
+        case 7:
+            this.nom = "Erik";
+			this.pV= 30;
+			this.vitesse=20;
+			this.attaque1 = new Attaque("Coup de dague",1,15);
+			this.attaque2 = new Attaque("Aspi-PV",1,7);
+			this.attaque3 = new Attaque("Frappe de l'assassin",1,40);
+			break;
 		case 42:
 			//ceci est un easter egg
 			this.nom = "L'Être Suprême";
@@ -99,8 +97,6 @@ public class Personnage{
 		default:
             System.out.println("erreur ! entre un numéro valide");
         }
-        this.x= 1;
-        this.y=1;
     }
     
     /** Cette méthode affiche le nombre de points de vie restants du personnage
@@ -176,14 +172,6 @@ public class Personnage{
     public void setCooldown(int i){
         this.cooldownAtk3=i;
     }
-    
-    public void degat(int degat){
-        this.pV = this.pV - degat;
-    }
-    
-    public void soin (int degat){
-		this.pV= this.pV + degat;
-	}
     
     public String getSymbole(){
         return this.symbole;
