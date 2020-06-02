@@ -28,7 +28,7 @@ public class Attaque{
   }
   
   public void baisseDegats(){
-  	this.degats= (int) (this.degats * (4.0/5.0));
+  	this.degats= (int) Math.ceil(this.degats * 0.8);
   }
   
 }

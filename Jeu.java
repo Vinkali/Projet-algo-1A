@@ -1,8 +1,8 @@
 import java.util.Scanner;
 public class Jeu{
-    Personnage j1;
-    Personnage j2;
-    Plateau plateau;
+    private Personnage j1;
+    private Personnage j2;
+    private Plateau plateau;
     
     public Jeu(){
         Scanner sc = new Scanner(System.in);
@@ -111,7 +111,7 @@ public class Jeu{
                 System.out.println(this.j2.getNom()+" prend de vitesse son adversaire !");
             }
         }else{
-            System.out.println("L'Être Suprême prend de vitesse le misérable cafard qui ose se tenir sur son chemin !"); //Ce cas n'a lieu que si un des joueurs a trouvé l'easter egg
+            System.out.println("L'Être Suprême prend de vitesse le misérable cafard qui ose se tenir sur son chemin !"); //Ce cas n'a lieu que si un seul des joueurs a trouvé l'easter egg
         }
         System.out.println();
     }
