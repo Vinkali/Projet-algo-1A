@@ -111,9 +111,7 @@ public class Personnage{
         System.out.println();
         System.out.println();
     }
-    /** Toutes les méthodes suivantes permettent de renvoyer les caractéristiques requises dans les autres méthodes 
-    pour gérer les déplacments les attaques et le joueur actif
-    */
+    
     public String getNom(){
         return this.nom;
     }
