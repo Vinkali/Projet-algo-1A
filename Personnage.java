@@ -17,6 +17,9 @@ public class Personnage{
         this.joueur = joueur;
     }
     
+	/** Cette méthode permet de créer les perosnnages en spécifiant toutes leurs caractéristiques et attaques.
+	*/
+
     public Personnage(String joueur, int i){
         this.joueur = joueur;
         this.cooldownAtk3 = 4;
@@ -109,7 +112,9 @@ public class Personnage{
         System.out.println();
         System.out.println();
     }
-    
+    /** Toutes les méthodes suivantes permettent de renvoyer les caractéristiques requises dans les autres méthodes 
+    pour gérer les déplacments les attaques et le joueur actif
+    */
     public String getNom(){
         return this.nom;
     }
