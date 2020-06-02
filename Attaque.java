@@ -9,7 +9,7 @@ public class Attaque{
     this.degats = d;
   }
   
-  public Attaque(){ 
+  public Attaque(){ // Cette méthode permet au joueur de décider de rien faire en sélectionnant l'attaque 0 qui n'a aucun effet
     this.nom = "attaque nulle";
     this.portee = 0;
     this.degats = 0;
@@ -26,8 +26,10 @@ public class Attaque{
   public int getDegats(){
 	return this.degats;
   }
-  
-  public void baisseDegats(){
+  /** Cette méthode réduit les dégats de chaque attaque après utilisation pour éviter de spamer tout le temps la même capacité
+  et qu'il y ait ainsi plus de dynamisme dans la partie
+  */ 
+  public void baisseDegats(){  
   	this.degats= (int) Math.ceil(this.degats * 0.8);
   }
   
