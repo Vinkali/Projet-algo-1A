@@ -107,8 +107,8 @@ public class Plateau{
      * on en place 3 à la fois max et on s'assure que la case ne soit pas déjà occupée par un joueur, une forêt ou un autre bonus 
      * @param j1 le joueur 1
      * @param j2 le joueur 2
-     * @see nBonus
-     * @see joueur
+     * @see nbBonus
+     * @see Joueur
      */
     public void creationBonus(Personnage j1, Personnage j2){
         while(this.nbBonus() < 3){//il n'y a pas plus de 3 bonus à la fois sur le plateau

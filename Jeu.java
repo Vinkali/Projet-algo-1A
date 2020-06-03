@@ -203,7 +203,6 @@ public class Jeu{
      * @param adversaire son adversaire
      * @see Plateau
      * @see Personnage
-     * @see afficheVie
      * @see phaseAttaque
      */
     public void deroulement(Personnage joueur, Personnage adversaire){
