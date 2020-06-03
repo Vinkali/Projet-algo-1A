@@ -83,7 +83,7 @@ public class Jeu{
      * affiche le texte des règles
      */
     private void regles(){
-        System.out.println("à chaque tour les joueurs se déplacent puis attaquent leur adversaire si ils sont assez près");
+        System.out.println("Votre duel va commencer ! \n\nA chaque tour les joueurs peuvent se déplacer et attaquer leur adversaire.\nDes surprises vous attendent sur le terrain du combat...");
     }
     
     /**
@@ -127,7 +127,7 @@ public class Jeu{
      * @see choixPersos
      */
     private void descriptionPersos(){
-        System.out.println("1: Hector | 2: Merlin | 3: Inspecteur gadget | 4: Gimli | 5: Ichigo | 6: Zhivago | 7: Erik");
+        System.out.println("Il est temps de choisir votre héros ! \n1: Hector | 2: Merlin | 3: Inspecteur gadget | 4: Gimli | 5: Ichigo | 6: Zhivago | 7: Erik");
     }
     
     /** détermine aléatoirement quel joueur commence
