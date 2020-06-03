@@ -144,6 +144,10 @@ public class Jeu{
         return b;
     }
     
+    /** Cette méthode regroupe le déroulement de chaque tour
+     * et laisse le choix au joueur de se déplacer ou d'attaquer en premier
+     * @param joueur (celui dont c'est le tour) et la victime, personnage passif
+     */
     public void deroulement(Personnage joueur, Personnage victime){
         Scanner sc = new Scanner(System.in);
         this.plateau.affichage(joueur,victime);
@@ -201,6 +205,10 @@ public class Jeu{
         System.out.println();
 	}
     
+    /** Cette méthode regroupe les différents cas d'attaques
+     * ainsi que leur conséquence (dégat ou soin d'un personnage)
+     * @param joueur (celui dont c'est le tour) et la victime, personnage passif
+     */
     public void phaseAttaque(Personnage joueur, Personnage victime){
         Attaque A = this.choixAttaque(joueur);
         System.out.println();
@@ -234,22 +242,23 @@ public class Jeu{
             }
         }
     }
-    
-	public Attaque choixAttaque(Personnage joueur){
-		Scanner sc = new Scanner(System.in);
- 		Attaque nulle= new Attaque();
-		
-		System.out.println("Voici les attaques de ton personnage:");
-		for(int i = 1; i<4; i++){
-			if(i==3 && joueur.getNom() =="Zhivago"){
-                System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui n'inflige pas de dégats mais te rends "+joueur.getAttaque(i).getDegats()+" PV");
-            }else if(i==2 && joueur.getNom() =="Erik"){
-                System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts, te rend autant de PV et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
-            }
-            else{
-                System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
-            }
-		}
+     /** Cette méthode permet le choix des attaques
+     * @param joueur (celui dont c'est le tour) et la victime, personnage passif
+     */    
+    public Attaque choixAttaque(Personnage joueur){
+	Scanner sc = new Scanner(System.in);
+	Attaque nulle= new Attaque();
+	
+	System.out.println("Voici les attaques de ton personnage:");
+	for(int i = 1; i<4; i++){
+		if(i==3 && joueur.getNom() =="Zhivago"){
+                	System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui n'inflige pas de dégats mais te rends "+joueur.getAttaque(i).getDegats()+" PV");
+        	}else if(i==2 && joueur.getNom() =="Erik"){
+                	System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts, te rend autant de PV et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
+		}else{
+                	System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
+        	}
+	}
 		System.out.print("Entre le numéro associé à l'attaque que tu veux utiliser: ");
 		int a = sc.nextInt();
 		while((a<0)||(a>3)){
@@ -272,6 +281,11 @@ public class Jeu{
 		}
 	}
     
+    /* Cette méthode vérifie si la distance 
+    * entre les joueurs est inférieure ou égale à la portée de l'attaque
+    * @param portée (int) de l'attaque, personnages j (attaquant) et v (victime)
+    * @return boolean b (true si v est à portée et false sinon)
+    */
     public boolean testPortee(int portee, Personnage j, Personnage v){
         boolean b= false;
         for(int i = j.getX() - portee; i<= j.getX() + portee; i++){
@@ -290,6 +304,10 @@ public class Jeu{
         sc.nextLine();
     }
     
+    /* Cette méthode détermine si la partie est finie
+    * c'est-à-dire si l'un des joueurs n'a plus de PV
+    * @return boolean 
+    */
     public boolean finPartie(){
         if(this.j1.getPV()<=0){
             System.out.println(this.j2.getNom() + " remporte ce combat !");
