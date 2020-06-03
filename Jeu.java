@@ -210,6 +210,7 @@ public class Jeu{
      * @see Plateau.creationBonus
      */
     public void deroulement(Personnage joueur, Personnage adversaire){
+
         Scanner sc = new Scanner(System.in);
         this.plateau.affichage(joueur,adversaire);
         
@@ -269,7 +270,7 @@ public class Jeu{
     /**
      * gère la phase d'attaque du tour. 
      * vérifie que le joueur est en mesure d'utiliser l'attaque qu'il choisit dans choixAttaque
-     * et en applique les conséquences
+     * et en applique les conséquences (dégat ou soin d'un personnage)
      * @param joueur le joueur dont c'est le tour
      * @param adversaire son adversaire
      * @see Attaque
@@ -281,6 +282,7 @@ public class Jeu{
      * @see Attaque.baisseDegats
      */
     public void phaseAttaque(Personnage joueur, Personnage adversaire){
+
         Attaque A = this.choixAttaque(joueur);
         System.out.println();
         
@@ -367,11 +369,13 @@ public class Jeu{
 		}
 	}
     
+
     /**
-     * vérifie que la cible d'une attaque est à protée de l'attaque
+     * vérifie que la cible d'une attaque est à portée de l'attaque
      * @param portee la portée de l'attaque
      * @see Personnage
      * @see phaseAttaque
+     * @return boolean aPortee (true si v est à portée et false sinon)
      */
     public boolean testPortee(int portee){
         boolean aPortee = false;
