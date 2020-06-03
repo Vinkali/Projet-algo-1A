@@ -191,6 +191,7 @@ public class Plateau{
         int j=0;
         
         while(deplValide==false){
+            System.out.println("Tu es actuellement en ("+(p.getY()-1)+" ; "+(p.getX()-1)+")");
             System.out.println("sur quelle colonne veux-tu déplacer ton héros ?");
             j = sc.nextInt()+1;
             System.out.println("sur quelle ligne veux-tu déplacer ton héros ?");
