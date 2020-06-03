@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 /**
  * C'est dans cette classe qu'est géré l'essentiel du jeu.
- * Elle contient les personnages et le plateau en attributs
+ * contient les personnages et le plateau en attributs
  * et des méthodes pour mettre en place le jeu, le faire se dérouler et afficher le gagnant
  */
 public class Jeu{
@@ -80,17 +80,17 @@ public class Jeu{
     }
     
     /**
-     * Cette méthode affiche le texte des règles
+     * affiche le texte des règles
      */
     private void regles(){
         System.out.println("à chaque tour les joueurs se déplacent puis attaquent leur adversaire si ils sont assez près");
     }
     
     /**
-     * Cette méthode permet au joueur de choisir son personnage.
-     * Elle affiche la liste des personnages disponible et lui demande le numéro de celui qu'il veut jouer.
-     * elle fournit ce numéro au constructeur du personnage, qui l'utilise pour l'initialiser à partir d'une liste de modèles.
-     * cette méthode affiche ensuite quelques caractéristiques du personnage, et demande au joueur de confirmer son choix.
+     * permet au joueur de choisir son personnage.
+     * affiche la liste des personnages disponible et lui demande le numéro de celui qu'il veut jouer.
+     * fournit ce numéro au constructeur du personnage, qui l'utilise pour l'initialiser à partir d'une liste de modèles.
+     * affiche ensuite quelques caractéristiques du personnage, et demande au joueur de confirmer son choix.
      * @param j le personnage du joueur, qui n'a pas encore de caractéristiques
      * @return j le personnage du joueur initialisé d'après un modèle
      * @see descriptionPersos
@@ -123,14 +123,14 @@ public class Jeu{
     }
     
     /**
-     * Cette méthode affiche le texte de description des personnages
+     * affiche le texte de description des personnages
      * @see choixPersos
      */
     private void descriptionPersos(){
         System.out.println("1: Hector | 2: Merlin | 3: Inspecteur gadget | 4: Gimli | 5: Ichigo | 6: Zhivago | 7: Erik");
     }
     
-    /** Cette méthode détermine aléatoirement quel joueur commence
+    /** détermine aléatoirement quel joueur commence
      * et stocke cette information dans un attribut de la classe Personnage
      * sauf si un des joueurs a trouvé l'easter egg, auquel cas il commence en premier d'office
      * @see Personnage
@@ -158,7 +158,7 @@ public class Jeu{
     }
     
     /**
-     * Cette méthode place les joueurs de manière aléatoire au début du jeu.
+     * place les joueurs de manière aléatoire au début du jeu.
      * Les joueurs sont placés dans la zone "utile" du plateau,
      * c'est à dire un carré de 15x15 à 2 cases de distance de chaque bord du tableau de taille 19x19 qui représente le plateau.
      * Les coordonnées ne sont validées que si une distance d'au moins 4 cases entre les joueurs est respectée
@@ -175,7 +175,7 @@ public class Jeu{
     }
     
     /**
-     * Cette méthode vérfie si les deux joueurs ne sont pas 
+     * vérfie si les deux joueurs ne sont pas 
      * trop proches pour le début de partie 
      * et renvoie l'info sous forme de booléen
      * @return b le booléen qui détermine si la distance est correcte
@@ -185,8 +185,8 @@ public class Jeu{
     public boolean distanceSecurite(){
         boolean b = true;
         for(int i = this.j1.getX() - 4; i<= this.j1.getX() + 4; i++){
-            for(int j = this.j1.getY() - 4; j<= this.j1.getY() + 4; j++){
-                if((i==this.j2.getX())&&(j==this.j2.getY())){
+            for(int j = this.j1.getY() - 4; j<= this.j1.getY() + 4; j++){ 
+                if((i==this.j2.getX())&&(j==this.j2.getY())){ // on s'assure qu'il y ait au moins 4 cases d'écart entre les joueurs
                     b= false;
                 }
             }
@@ -195,8 +195,9 @@ public class Jeu{
     }
     
     /**
-     * Cette méthode gère la structure du tour.
-     * Elle permet au joueur de choisir l'ordre de ses actions, et déclenche d'autres méthodes en conséquence.
+     * gère la structure du tour.
+     * permet au joueur de choisir l'ordre de ses actions, et déclenche d'autres méthodes en conséquence.
+     * affiche le plateau et les points de vie des joueurs entre chaque étape, et génère de nouveaux bonus à la fin du tour
      * 
      * @param joueur le joueur dont c'est le tour
      * @param adversaire son adversaire
@@ -239,7 +240,7 @@ public class Jeu{
             joueur.afficheVie();
             adversaire.afficheVie();
             
-            if(joueur.getMouvRestant()>0){
+            if(joueur.getMouvRestant()>0){ 
                 this.plateau.affichage(joueur, adversaire);
                 System.out.println("Tu as encore la possibilité de te déplacer de "+joueur.getMouvRestant()+" cases.");
                 this.plateau.deplacement(joueur, adversaire);
@@ -247,7 +248,7 @@ public class Jeu{
                 adversaire.afficheVie();
             }
         
-        }else{
+        }else{// si le joueur choisit de commencer par attaquer, il le fait, puis peut se déplacer
             this.phaseAttaque(joueur, adversaire);
             
             System.out.println();
@@ -259,14 +260,16 @@ public class Jeu{
             joueur.afficheVie();
             adversaire.afficheVie();
         }
-        this.plateau.creationBonus(joueur, adversaire);
+        this.plateau.creationBonus(joueur, adversaire); // à la fin du tour, de nouveaux bonus sont créés pour remplacer ceux qui ont été récupérés
         this.pressEnter();
         System.out.println();
         System.out.println();
 	}
     
     /**
-     * 
+     * gère la phase d'attaque du tour. 
+     * vérifie que le joueur est en mesure d'utiliser l'attaque qu'il choisit dans choixAttaque
+     * et en applique les conséquences
      * @param joueur le joueur dont c'est le tour
      * @param adversaire son adversaire
      * @see Attaque
@@ -281,29 +284,32 @@ public class Jeu{
         Attaque A = this.choixAttaque(joueur);
         System.out.println();
         
-        if(this.plateau.getForet()[joueur.getX()][joueur.getY()] != this.plateau.getForet()[adversaire.getX()][adversaire.getY()]){
+        if(this.plateau.getForet()[joueur.getX()][joueur.getY()] != this.plateau.getForet()[adversaire.getX()][adversaire.getY()]){ //si un joueur est dans la forêt et l'autre non, ils ne peuvent pas s'attaquer
             System.out.println(joueur.getNom() + " tente d'attaquer son adversaire ... mais celui-ci semble s'être volatilisé !");
         }else{
             
-            while((this.testPortee(A.getPortee())==false)&&(A.getNom()!="attaque nulle")){
+            while((this.testPortee(A.getPortee())==false)&&(A.getNom()!="attaque nulle")){ //le choix recommence tant que le joueur n'a pas choisi une attaque qui a assez de portée pour toucher son adversaire ou choisi de passer son attaque du tour
                 System.out.println();
                 System.out.println("Tu es trop loin de ton adversaire pour lancer cette attaque, choisis en une autre, ou écris 0 si tu ne peux pas jouer!");
                 System.out.println();
                 A = this.choixAttaque(joueur);
             }
         
-            if(A.getNom()=="attaque nulle"){
+            if(A.getNom()=="attaque nulle"){// si le joueur choisit de ne pas attaquer, rien ne se passe
                 System.out.println(joueur.getNom()+" épargne son adversaire pour ce tour");
-            }else if(A.getNom() == "Régénération bestiale"){
+                
+            }else if(A.getNom() == "Régénération bestiale"){ // cette attaque particulière soigne son utilisateur mais n'inflige pas de dégats
                 System.out.println(joueur.getNom()+ " se soigne de "+ A.getDegats()+ " PV !");
                 joueur.setPV(joueur.getPV() + A.getDegats());
                 A.baisseDegats();
-            }else if(A.getNom()== "Aspi-PV"){
+                
+            }else if(A.getNom()== "Aspi-PV"){ // cette attaque particulière soigne son utlisateur d'autant de PV qu'elle inflige de dégats
                 System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+adversaire.getNom()+" et se soigne d'autant de PV !");
                 joueur.setPV(joueur.getPV() + A.getDegats());
                 adversaire.setPV(adversaire.getPV() - A.getDegats());
                 A.baisseDegats();
-            }else{
+                
+            }else{// dans les autres cas, l'attaque inflige des dégats normalement
                 System.out.println(joueur.getNom()+" lance son attaque "+A.getNom()+" et arrache "+A.getDegats()+" PV à "+adversaire.getNom()+" !");
                 adversaire.setPV(adversaire.getPV() - A.getDegats());
                 A.baisseDegats();
@@ -312,8 +318,10 @@ public class Jeu{
     }
     
     /**
-     * 
+     * permet au joueur de choisir une attaque.
+     * affiche la liste des attaques du personnage et s'assure que le choix est valide
      * @param joueur le joueur dont c'est le tour
+     * @return l'attaque choisie
      * @see Attaque
      * @see Personnage
      * @see phaseAttaque
@@ -321,32 +329,35 @@ public class Jeu{
      */
 	public Attaque choixAttaque(Personnage joueur){
 		Scanner sc = new Scanner(System.in);
- 		Attaque nulle= new Attaque();
+ 		Attaque nulle= new Attaque(); //utlisée si le joueur ne veut pas attaquer
 		
 		System.out.println("Voici les attaques de ton personnage:");
 		for(int i = 1; i<4; i++){
-			if(i==3 && joueur.getNom() =="Zhivago"){
+			if(i==3 && joueur.getNom() =="Zhivago"){// cette attaque particulière soigne son utilisateur mais n'inflige pas de dégats
                 System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui n'inflige pas de dégats mais te rends "+joueur.getAttaque(i).getDegats()+" PV");
-            }else if(i==2 && joueur.getNom() =="Erik"){
+                
+            }else if(i==2 && joueur.getNom() =="Erik"){// cette attaque particulière soigne son utlisateur d'autant de PV qu'elle inflige de dégats
                 System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts, te rend autant de PV et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
             }
-            else{
+            else{// pour les attaques normales, on affiche leurs dégats et leur portée
                 System.out.println(i+": "+joueur.getAttaque(i).getNom()+" qui inflige "+joueur.getAttaque(i).getDegats()+" dégâts et a une portée de "+joueur.getAttaque(i).getPortee()+" cases");
             }
 		}
+        System.out.println("0 : ne pas attaquer");
+        System.out.println();
 		System.out.print("Entre le numéro associé à l'attaque que tu veux utiliser: ");
 		int a = sc.nextInt();
-		while((a<0)||(a>3)){
+		while((a<0)||(a>3)){// on s'assure que le joueur entre un numéro valide
 			System.out.print("Tu te trompes jeune guerrier, ceci n'est pas une attaque disponible, entre à nouveau un nombre: ");
 			a= sc.nextInt();
 		}
         
-        while(a==3 && joueur.getCooldown()!=0){
+        while(a==3 && joueur.getCooldown()!=0){// si le joueur choisit l'attaque 3 alors qu'elle n'est pas encore disponible, on l'en informe
             System.out.print("Cette attaque ne sera disponible que dans "+joueur.getCooldown()+" tours, entre à nouveau un nombre: ");
 			a= sc.nextInt();
         }
         
-		if((a==1)||(a==2)){
+		if((a==1)||(a==2)){//sinon on renvoie l'attaque correspondant à son choix
 			return joueur.getAttaque(a);
 		}else if(a==3 && joueur.getCooldown()==0){
             joueur.setCooldown(3);
@@ -357,7 +368,7 @@ public class Jeu{
 	}
     
     /**
-     * 
+     * vérifie que la cible d'une attaque est à protée de l'attaque
      * @param portee la portée de l'attaque
      * @see Personnage
      * @see phaseAttaque
@@ -375,8 +386,9 @@ public class Jeu{
     }
     
     /**
-     * Cette méthode sert à faire une pause dans le programme avant le changement de joueur.
-     * Elle utilise la classe scanner pour interrompre le programme jusqu'à ce que le joueur appuie sur entrée
+     * sert à faire une pause dans le programme avant le changement de joueur.
+     * utilise la classe scanner pour interrompre le programme jusqu'à ce que le joueur appuie sur entrée
+     * @see deroulement
      */
     public void pressEnter(){
         Scanner sc = new Scanner(System.in);
@@ -385,8 +397,8 @@ public class Jeu{
     }
     
     /**
-     * Cette méthode détermine si la partie est finie.
-     * Elle vérifie si les points de vie des joueurs sont au-dessus de 0
+     * détermine si la partie est finie.
+     * vérifie si les points de vie des joueurs sont au-dessus de 0
      * @return fini le boolean qui détermine si la partie est finie
      */
     public boolean finPartie(){

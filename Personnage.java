@@ -1,28 +1,92 @@
+/**
+ * Stocke les caractéristiques du personnage.
+ * contient aussi une méthde pour l'affichage des points de vie
+ */
 public class Personnage{
+    
+    /**
+     * le nom du joueur
+     */
     private String joueur;
+    
+    /**
+     * le nom du personnage
+     */
     private String nom;
+    
+    /**
+     * le symbole qui s'affiche sur le plateau
+     * @see Plateau.affichage
+     */
     private String symbole;
+    
+    /**
+     * pour savoir si c'est le tour du joueur ou de son adversaire
+     */
     private boolean joueurActif;
+    
+    /**
+     * le nombre de points de vie du joueur
+     */
     private int pV;
+    
+    
+    /**
+     * la vitesse du joueur, c'est à dire le nombre de case duquel il peut se déplacer à chauqe tour
+     */
     private int vitesse;
+    
+    /**
+     * le nombre de cases de déplacement restantes pour le tour
+     */
     private int mouvRestant;
+    
+    /**
+     * la première attaque du joueur
+     */
     private Attaque attaque1;
+    
+    /**
+     * la deuxième attaque du joueur
+     */
     private Attaque attaque2;
+    
+    /**
+     * la troisième attaque du joueur, utilisable seulement après un temps de recharge
+     */
     private Attaque attaque3;
+    
+    /**
+     * le nombre de tours restant avant de pouvoir réutiliser l'attaque 3
+     */
     private int cooldownAtk3;
+    
+    
+    /**
+     * l'abscisse du joueur sur le plateau
+     */
     private int x;
+    
+    /**
+     * l'ordonnée du joueur sur le plateau
+     */
     private int y;
     
+    /**
+     * constructeur utilisé dans un premier temps, qui ne stocke que le nom du joueur
+     */
     public Personnage(String joueur){
         this.joueur = joueur;
     }
     
-    /** Cette méthode permet de créer les perosnnages en spécifiant toutes leurs caractéristiques et attaques.
-     * En pratique, elle initialise les caractéristique d'un personnage à partir d'une liste de modèles prédéfinis
+    /** 
+     * constructeur plus complexe qui permet de créer les personnages en spécifiant toutes leurs caractéristiques et attaques.
+     * initialise les caractéristique d'un personnage à partir d'une liste de modèles prédéfinis
+     * @see Jeu.choixPerso
      */
     public Personnage(String joueur, int i){
         this.joueur = joueur;
-        this.cooldownAtk3 = 4; // ceci permet de régler le temps de recharge de la 3eme attaque des héros
+        this.cooldownAtk3 = 4;
         this.x = 1;
         this.y = 1;
         
@@ -102,7 +166,9 @@ public class Personnage{
         }
     }
     
-    /** Cette méthode affiche le nombre de points de vie restants du personnage
+    /** 
+     * affiche le nombre de points de vie restants du personnage sous forme de "barre de vie"
+     * @see Jeu.deroulement
      */
     public void afficheVie(){
         System.out.println("PV "+this.getJoueur()+" :");
