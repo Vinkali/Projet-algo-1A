@@ -16,7 +16,9 @@ public class Plateau{
         
     }
     
-    public void creationDefaut(){ //remplissage du plateau de base
+    /** Cette méthode sert à créer le plateau par défaut dont la surface utile est de 15x15 cases
+     */
+    public void creationDefaut(){ 
         for(int i=0; i<this.defaut.length; i++){ 
             for (int j=0; j<this.defaut[0].length; j++){
                 
@@ -44,16 +46,16 @@ public class Plateau{
         }
     }
     
-    /** Cette méthode crée 3 forêts
-     * placées aléatoirement sur le plateau
+    /** Cette méthode crée 3 forêts placées aléatoirement sur le plateau
+     * dans lesquelles les joueurs peuvent se cacher
      * @param les joueurs j1 et j2
      */
     private void creationForet(Personnage j1, Personnage j2){
         int nbForet = 0;
         while(nbForet< 3){
-            int a = (int) (Math.random()*13+3);
-            int b = (int) (Math.random()*13+3);
-            boolean touchePerso = false;
+            int a = (int) (Math.random()*13+3); //les forêts sont placées sur la surface utile du plateau
+            int b = (int) (Math.random()*13+3); //le centre est à au moins une case du bord puisqu'elles sont de taille 3x3
+            boolean touchePerso = false;// vérifie si la forêt recouvre l'emplacement d'un personnage
             for(int u= a-1; u<=a+1; u++){
 				for(int v=b-1; v<=b+1; v++){
 					if((u==j1.getX() && v==j1.getY()) || (v==j2.getY() && u==j2.getX())){
@@ -79,7 +81,7 @@ public class Plateau{
      */
     public void creationBonus(Personnage j1, Personnage j2){
         while(this.nbBonus() < 3){
-            int a = (int) (Math.random()*15+2);
+            int a = (int) (Math.random()*15+2);// les bonus sont placés
             int b = (int) (Math.random()*15+2);
             boolean caseOccupee = false;
             for(int u= a-1; u<=a+1; u++){

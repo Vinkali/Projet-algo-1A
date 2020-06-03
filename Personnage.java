@@ -18,7 +18,8 @@ public class Personnage{
     }
     
     /** Cette méthode permet de créer les perosnnages en spécifiant toutes leurs caractéristiques et attaques.
-    */
+     * En pratique, elle initialise les caractéristique d'un personnage à partir d'une liste de modèles prédéfinis
+     */
     public Personnage(String joueur, int i){
         this.joueur = joueur;
         this.cooldownAtk3 = 4; // ceci permet de régler le temps de recharge de la 3eme attaque des héros

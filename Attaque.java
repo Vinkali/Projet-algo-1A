@@ -26,9 +26,10 @@ public class Attaque{
   public int getDegats(){
 	return this.degats;
   }
+  
   /** Cette méthode réduit les dégats de chaque attaque après utilisation pour décourager le joueur d'utiliser tout le temps la même capacité
-  et qu'il y ait ainsi plus de dynamisme dans la partie
-  */ 
+   * et qu'il y ait ainsi plus de dynamisme dans la partie
+   */
   public void baisseDegats(){  
   	this.degats= (int) Math.ceil(this.degats * 0.8);
   }
