@@ -151,6 +151,8 @@ public class Plateau{
     /**
      * affiche l'état actuel du plateau de jeu.
      * affiche l'emplacement des joueurs, des forêts et des bonus et le plateau par défaut aux autres endroits
+     * @param j1 un joueur
+     * @param j2 l'autre joueur
      */
     public void affichage(Personnage j1, Personnage j2){
         

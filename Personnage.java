@@ -16,7 +16,6 @@ public class Personnage{
     
     /**
      * le symbole qui s'affiche sur le plateau
-     * @see Plateau.affichage
      */
     private String symbole;
     
@@ -74,6 +73,7 @@ public class Personnage{
     
     /**
      * constructeur utilisé dans un premier temps, qui ne stocke que le nom du joueur
+     * @param joueur le nom du joueur
      */
     public Personnage(String joueur){
         this.joueur = joueur;
@@ -82,7 +82,8 @@ public class Personnage{
     /** 
      * constructeur plus complexe qui permet de créer les personnages en spécifiant toutes leurs caractéristiques et attaques.
      * initialise les caractéristique d'un personnage à partir d'une liste de modèles prédéfinis
-     * @see Jeu.choixPerso
+     * @param joueur le nom du joueur
+     * @param i le numéro du modèle sélectionné
      */
     public Personnage(String joueur, int i){
         this.joueur = joueur;
@@ -168,7 +169,6 @@ public class Personnage{
     
     /** 
      * affiche le nombre de points de vie restants du personnage sous forme de "barre de vie"
-     * @see Jeu.deroulement
      */
     public void afficheVie(){
         System.out.println("PV "+this.getJoueur()+" :");
