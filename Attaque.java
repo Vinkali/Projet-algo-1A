@@ -22,6 +22,9 @@ public class Attaque{
     /**
      * Constructeur par défaut.
      * initialise le nom, la portée et les dégats de l'attaque
+     * @param nom le nom de l'attaque
+     * @param p la portée de l'attaque
+     * @param d les dégats de l'attaque
      */
     public Attaque(String nom, int p, int d){
         this.nom = nom;
@@ -54,7 +57,6 @@ public class Attaque{
     /** réduit les dégats de l'attaque.
      * appelée après chaque attaque pour décourager le joueur d'utiliser tout le temps la même capacité
      * et qu'il y ait ainsi plus de dynamisme dans la partie
-     * @see Jeu.phaseAttaque
      */
     public void baisseDegats(){  
         this.degats= (int) Math.ceil(this.degats * 0.8);

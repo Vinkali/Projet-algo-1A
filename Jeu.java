@@ -203,11 +203,7 @@ public class Jeu{
      * @param adversaire son adversaire
      * @see Plateau
      * @see Personnage
-     * @see Plateau.affichage
-     * @see afficheVie
-     * @see Plateau.deplacement
      * @see phaseAttaque
-     * @see Plateau.creationBonus
      */
     public void deroulement(Personnage joueur, Personnage adversaire){
 
@@ -279,7 +275,6 @@ public class Jeu{
      * @see deroulement
      * @see choixAttaque
      * @see testPortee
-     * @see Attaque.baisseDegats
      */
     public void phaseAttaque(Personnage joueur, Personnage adversaire){
 

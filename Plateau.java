@@ -107,8 +107,7 @@ public class Plateau{
      * on en place 3 à la fois max et on s'assure que la case ne soit pas déjà occupée par un joueur, une forêt ou un autre bonus 
      * @param j1 le joueur 1
      * @param j2 le joueur 2
-     * @see nBonus
-     * @see joueur
+     * @see nbBonus
      */
     public void creationBonus(Personnage j1, Personnage j2){
         while(this.nbBonus() < 3){//il n'y a pas plus de 3 bonus à la fois sur le plateau
@@ -151,6 +150,8 @@ public class Plateau{
     /**
      * affiche l'état actuel du plateau de jeu.
      * affiche l'emplacement des joueurs, des forêts et des bonus et le plateau par défaut aux autres endroits
+     * @param j1 un joueur
+     * @param j2 l'autre joueur
      */
     public void affichage(Personnage j1, Personnage j2){
         
